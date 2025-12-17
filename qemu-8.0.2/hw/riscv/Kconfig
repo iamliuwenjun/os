@@ -88,4 +88,5 @@ config SPIKE
 config QUARD_STAR
     bool
     select SERIAL
+    select PFLASH_CFI01
     

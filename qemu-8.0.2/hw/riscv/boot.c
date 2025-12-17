@@ -382,7 +382,7 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
                                hwaddr start_addr,
                                hwaddr rom_base, hwaddr rom_size,
                                uint64_t kernel_entry,
-                               uint64_t fdt_load_addr)
+                               uint64_t fdt_load_addr)//设备树加载地址
 {
     int i;
     uint32_t start_addr_hi32 = 0x00000000;
