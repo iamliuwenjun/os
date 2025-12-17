@@ -16,12 +16,21 @@
 #include "hw/riscv/numa.h"
 #include "hw/intc/riscv_aclint.h"
 #include "hw/intc/riscv_aplic.h"
+#include "hw/intc/riscv_imsic.h"
+#include "hw/platform-bus.h"
+#include "hw/intc/sifive_plic.h"
+#include "hw/misc/sifive_test.h"
 
 #include "chardev/char.h"
 #include "sysemu/device_tree.h"
 #include "sysemu/sysemu.h"
 #include "sysemu/kvm.h"
 #include "sysemu/tpm.h"
+#include "hw/pci/pci.h"
+#include "hw/pci-host/gpex.h"
+#include "hw/display/ramfb.h"
+#include "hw/acpi/aml-build.h"
+#include "qapi/qapi-visit-common.h"
 
 
 
@@ -29,8 +38,11 @@ static const MemMapEntry quard_star_memmap[] = {
     [QUARD_STAR_MROM]  = {        0x0,        0x8000 },
     [QUARD_STAR_SRAM]  = {     0x8000,        0x8000 },
     [QUARD_STAR_CLINT] = { 0x02000000,       0x10000 },
-    [QUARD_STAR_PLIC]  = { 0x0c000000,     0x4000000 },
+    [QUARD_STAR_PLIC]  = { 0x0c000000,     QUARD_STAR_PLIC_SIZE(QUARD_STAR_CPUS_MAX * 2) },
     [QUARD_STAR_UART0] = { 0x10000000,         0x100 },
+    [QUARD_STAR_UART1] = { 0x10001000,         0x100 },
+    [QUARD_STAR_UART2] = { 0x10002000,         0x100 },
+    [QUARD_STAR_RTC]   = { 0x10003000,        0x1000 },
     [QUARD_STAR_FLASH] = { 0x20000000,     0x2000000 },
     [QUARD_STAR_DRAM]  = { 0x80000000,          0x80 },
 };
@@ -144,6 +156,7 @@ static void quard_star_memory_create(MachineState *machine)
     memory_region_add_subregion(system_memory, 
                                 quard_star_memmap[QUARD_STAR_MROM].base, mask_rom);
 
+    /* 从0号cpu开始加载复位程序，随后跳转到 flash位置开始执行*/
     riscv_setup_rom_reset_vec(machine, &s->soc[0], 
                               quard_star_memmap[QUARD_STAR_FLASH].base,
                               quard_star_memmap[QUARD_STAR_MROM].base,
@@ -163,7 +176,7 @@ static void quard_star_plic_create(MachineState *machine)
         base_hartid = riscv_socket_first_hartid(machine, i);
         char *plic_hart_config;
         /* Per-socket PLIC hart topology configuration string */
-        plic_hart_config = riscv_plic_hart_config_string(machine->smp.cpus);
+        plic_hart_config = riscv_plic_hart_config_string(hart_count);
         
         s->plic[i] = sifive_plic_create(
             quard_star_memmap[QUARD_STAR_PLIC].base + i *quard_star_memmap[QUARD_STAR_PLIC].size ,
@@ -203,6 +216,31 @@ static void quard_star_aclint_create(MachineState *machine)
     }
 }
 
+/* 创建3个 uart */
+static void quard_star_serial_create(MachineState *machine)
+{
+    MemoryRegion *system_memory = get_system_memory();
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART0].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART0_IRQ), 399193,
+        serial_hd(0), DEVICE_LITTLE_ENDIAN);
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART1].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART1_IRQ), 399193,
+        serial_hd(1), DEVICE_LITTLE_ENDIAN);
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART2].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART2_IRQ), 399193,
+        serial_hd(2), DEVICE_LITTLE_ENDIAN);
+}
+
+/* 创建 RTC */
+static void quard_star_rtc_create(MachineState *machine)
+{    
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    sysbus_create_simple("goldfish_rtc", quard_star_memmap[QUARD_STAR_RTC].base,
+        qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_RTC_IRQ));
+}
+
 /* quard-star 初始化各种硬件 */
 
 static void quard_star_machine_init(MachineState *machine)
@@ -217,6 +255,10 @@ static void quard_star_machine_init(MachineState *machine)
     quard_star_plic_create(machine);
     //创建RISCV_ACLINT
     quard_star_aclint_create(machine);
+    //创建三个uart
+    quard_star_serial_create(machine);
+    //创建 RTC
+    quard_star_rtc_create(machine);
 }
 
 static void quard_star_machine_instance_init(Object *obj)
