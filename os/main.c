@@ -3,6 +3,10 @@
 
 void os_main()
 {
-   int a = 666;
-   printf("hello lwj os!%d",a);
+   printf("hello timer os!\n");
+   app_init_context();
+   while (1)
+   {
+      
+   }
 }
