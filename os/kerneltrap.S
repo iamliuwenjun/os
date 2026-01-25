@@ -60,7 +60,7 @@ __alltraps:
 __restore:
     # case1: start running app by __restore
     # case2: back to U after handling trap
-    mv sp, a0
+    # mv sp, a0 # 不需要了，因为在__switch之后sp就已指向正确的trap上下文地址
     # now sp->kernel stack(after allocated), sscratch->user stack
     # restore sstatus/sepc
     ld t0, 32*8(sp)
