@@ -1,5 +1,5 @@
-#ifndef __RISCV_H__
-#define __RISCV_H__
+#ifndef LOS_RISCV_H__
+#define LOS_RISCV_H__
 
 #include "os.h"
 

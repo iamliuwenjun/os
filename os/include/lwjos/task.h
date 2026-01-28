@@ -1,5 +1,5 @@
-#ifndef __TASK_H__
-#define __TASK_H__
+#ifndef LOS_TASK_H__
+#define LOS_TASK_H__
 
 #include "os.h"
 typedef enum TaskState

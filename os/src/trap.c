@@ -1,6 +1,4 @@
-#include "os.h"
-#include "context.h"
-#include "riscv.h"
+#include <lwjos/os.h>
 
 
 
@@ -18,7 +16,7 @@ TrapContext* trap_handler(TrapContext* cx)
 			schedule();
 			break;
 		default:
-			printf("undfined interrrupt scause:%x\n",scause);
+			printk("undfined interrrupt scause:%x\n",scause);
 			break;
 		}
 	}
@@ -32,7 +30,7 @@ TrapContext* trap_handler(TrapContext* cx)
 			cx->sepc += 8;
 			break;
 		default:
-			printf("undfined exception scause:%x\n",scause);
+			printk("undfined exception scause:%x\n",scause);
 			break;
 		}
 	}

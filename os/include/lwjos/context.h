@@ -1,5 +1,5 @@
-#ifndef __CONTEXT_H__
-#define __CONTEXT_H__
+#ifndef LOS_CONTEXT_H__
+#define LOS_CONTEXT_H__
 
 #include "os.h"
 

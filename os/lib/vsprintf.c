@@ -1,12 +1,6 @@
-#include "os.h"
-void uart_puts(char *s)
-{
-	while (*s) {
-		sbi_console_putchar(*s++);
-	}
-}
+#include <lwjos/stdio.h>
 
-static int _vsnprintf(char * out, size_t n, const char* s, va_list vl)
+int _vsnprintf(char * out, size_t n, const char* s, va_list vl)
 {
 	int format = 0;
 	int longarg = 0;
@@ -98,42 +92,11 @@ static int _vsnprintf(char * out, size_t n, const char* s, va_list vl)
 			}
 			pos++;
 		}
-    }
+    	}
 	if (out && pos < n) {
 		out[pos] = 0;
 	} else if (out && n) {
 		out[n-1] = 0;
 	}
 	return pos;
-}
-
-static char out_buf[1000]; // buffer for _vprintf()
-static int _vprintf(const char* s, va_list vl)
-{
-	int res = _vsnprintf(NULL, -1, s, vl);
-	if (res+1 >= sizeof(out_buf)) {
-		uart_puts("error: output string size overflow\n");
-		while(1) {}
-	}
-	_vsnprintf(out_buf, res + 1, s, vl);
-	uart_puts(out_buf);
-	return res;
-}
-
-int printf(const char* s, ...)
-{
-	int res = 0;
-	va_list vl;
-	va_start(vl, s);
-	res = _vprintf(s, vl);
-	va_end(vl);
-	return res;
-}
-
-void panic(char *s)
-{
-	printf("panic: ");
-	printf(s);
-	printf("\n");
-	while(1){};
 }

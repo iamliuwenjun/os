@@ -1,6 +1,6 @@
-#include "os.h"
+#include <lwjos/os.h>
 #define CLOCK_FREQ 10000000 // 10MHz
-#define TICKS_PER_SEC 500   // 每秒500次时钟中断
+#define TICKS_PER_SEC 10   // 每秒10次时钟中断
 
 
 /* 设置下次时钟中断的cnt值 */

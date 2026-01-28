@@ -1,4 +1,5 @@
-#include "os.h"
+#include <lwjos/os.h>
+#include <lwjos/stdio.h>
 #define USER_STACK_SIZE (4096 * 2)
 #define KERNEL_STACK_SIZE (4096 * 2)
 

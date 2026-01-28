@@ -1,5 +1,5 @@
-#include "os.h"
-
+#include <lwjos/os.h>
+#include <lwjos/stdio.h>
 
 uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
         switch (syscall_id)
@@ -13,17 +13,16 @@ uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
         case __NR_gettimeofday:
             return __sys_gettime();
         default:
-            printf("Unsupported syscall id:%d\n",syscall_id);
+            printk("Unsupported syscall id:%d\n",syscall_id);
             break;
         }
 }
-
 
 void __sys_write(size_t fd, const char* data, size_t len)
 {
     if(fd == 1)
     {
-        printf(data);
+        printk(data);
     }
     else
     {

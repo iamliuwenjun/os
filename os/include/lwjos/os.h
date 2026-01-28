@@ -1,16 +1,16 @@
-#ifndef __OS_H__
-#define __OS_H__
+#ifndef LOS_OS_H__
+#define LOS_OS_H__
 
 #include <stddef.h>
 #include <stdarg.h>
+#include <stdbool.h>
 #include "types.h"
 #include "context.h"
 #include "riscv.h"
 #include "task.h"
+#include "stdio.h"
+#include "syscall.h"
 
-/* printf.c */
-extern int  printf(const char* s, ...);
-extern void panic(char *s);
 extern void sbi_console_putchar(int ch);
 
 /* trap.c */
@@ -22,12 +22,6 @@ extern void trap_init();
 extern void __alltraps(void);
 extern void __restore(TrapContext *next);
 
-/* syscall */
-uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3);
-#define __NR_write 64
-#define __NR_sched_yield 124
-#define __NR_exit 93
-#define __NR_gettimeofday 169
 
 /* switch.S */
 extern void __switch(TaskContext *current_task_cx_ptr,TaskContext* next_task_cx_ptr );
