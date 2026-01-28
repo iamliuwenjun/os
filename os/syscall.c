@@ -1,7 +1,7 @@
 #include "os.h"
 
 
-void __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
+uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
         switch (syscall_id)
         {
         case __NR_write:
@@ -10,6 +10,8 @@ void __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
         case __NR_sched_yield:
             __sys_yield();
             break;
+        case __NR_gettimeofday:
+            return __sys_gettime();
         default:
             printf("Unsupported syscall id:%d\n",syscall_id);
             break;
@@ -32,4 +34,9 @@ void __sys_write(size_t fd, const char* data, size_t len)
 void __sys_yield()
 {
     schedule();
+}
+
+uint64_t __sys_gettime()
+{
+    return get_time_us();
 }

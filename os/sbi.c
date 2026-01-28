@@ -37,3 +37,15 @@ void sbi_console_putchar(int ch)
 {
 	sbi_ecall(SBI_EXT_0_1_CONSOLE_PUTCHAR, 0, ch, 0, 0, 0, 0, 0);
 }
+
+/**
+ * sbi_set_timer() - Program the timer for next timer event.
+ * @stime_value: The value after which next timer event should fire.
+ * 实际上就是获取mtimecmp的值
+ * Return: None
+ */
+void sbi_set_timer(uint64_t stime_value)
+{
+	sbi_ecall(SBI_EXT_TIME, SBI_FID_SET_TIMER, stime_value,
+		  0, 0, 0, 0, 0);
+}
