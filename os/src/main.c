@@ -4,11 +4,9 @@ extern void frame_allocator_test();
 void os_main()
 {
    printk("hello timer os!\n");
-   // frame_allocator_test();
-   // while (1)
-   // {
-   //    /* code */
-   // }
+   
+   frame_allocator_test();
+
    trap_init();
 
    task_init();

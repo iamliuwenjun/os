@@ -249,6 +249,7 @@ void frame_allocator_test()
 
 
 /* 拿到虚拟页号的三级索引，按照从高到低的顺序返回 */
+/* 其实就是将虚拟地址的高27位拆成三份并返回 */
 void indexes(VirtPageNum vpn, size_t* result) 
 {
     size_t idx[3];
