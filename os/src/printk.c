@@ -10,7 +10,7 @@ void uart_puts(char *s)
 // _vsnprintf写在了lib/vsprintf.c中,成了和printf.c的公用函数
 
 static char out_buf[1000]; // buffer for _vprintf()
-static int _vprintf(const char* s, va_list vl)	
+static int _vprintf(const char* s, va_list vl)
 {
 	int res = _vsnprintf(NULL, -1, s, vl);
 	if (res+1 >= sizeof(out_buf)) {

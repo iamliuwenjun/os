@@ -1,6 +1,6 @@
 
 .globl __alltraps
-.align 4
+.align 3
 __alltraps:
     # 从sscratch获取S模式下的SP，把U模式下的SP保存到sscratch寄存器中
     csrrw sp, sscratch, sp
@@ -56,7 +56,7 @@ __alltraps:
 
 
 .globl __restore
-.align 4
+.align 3
 __restore:
     # case1: start running app by __restore
     # case2: back to U after handling trap

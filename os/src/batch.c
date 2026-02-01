@@ -1,12 +1,12 @@
-#include <stddef.h>
-#include "os.h"
-#include "context.h"
-#define USER_STACK_SIZE (4096 * 2)  //4096 × 2 = 8192 字节（8KB）
-#define KERNEL_STACK_SIZE (4096 * 2)//4096 × 2 = 8192 字节（8KB）
-#define APP_BASE_ADDRESS 0x80600000
+// #include <stddef.h>
+// #include "os.h"
+// #include "context.h"
+// #define USER_STACK_SIZE (4096 * 2)  //4096 × 2 = 8192 字节（8KB）
+// #define KERNEL_STACK_SIZE (4096 * 2)//4096 × 2 = 8192 字节（8KB）
+// #define APP_BASE_ADDRESS 0x80600000
 
-uint8_t KernelStack[KERNEL_STACK_SIZE];
-uint8_t UserStack[USER_STACK_SIZE];
+// uint8_t KernelStack[KERNEL_STACK_SIZE];
+// uint8_t UserStack[USER_STACK_SIZE];
 
 // size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3) {
 //     long ret;

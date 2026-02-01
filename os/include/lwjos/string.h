@@ -1,5 +1,5 @@
-#ifndef TOS_STRING_H__
-#define TOS_STRING_H__
+#ifndef LOS_STRING_H__
+#define LOS_STRING_H__
 
 #include <lwjos/os.h>
 size_t strlen(const char *str);

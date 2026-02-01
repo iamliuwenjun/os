@@ -1,11 +1,18 @@
 #include <lwjos/os.h>
-
-extern void frame_allocator_test();
+#include <lwjos/assert.h>
+extern void frame_alloctor_init();
+extern void kvminit();
+extern void kvminithart();
 void os_main()
 {
    printk("hello timer os!\n");
-   
-   frame_allocator_test();
+
+   // 内存分配器初始化
+   frame_alloctor_init();
+
+   kvminit();
+
+   kvminithart();
 
    trap_init();
 
@@ -13,5 +20,6 @@ void os_main()
 
    timer_init();
    
-   run_first_task();
+   // run_first_task();
+
 }

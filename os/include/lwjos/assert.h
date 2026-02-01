@@ -1,5 +1,5 @@
-#ifndef TOS_ASSERT_H
-#define TOS_ASSERT_H
+#ifndef LOS_ASSERT_H
+#define LOS_ASSERT_H
 
 void assertion_failure(char *exp, char *file, char *base, int line);
 

@@ -55,12 +55,11 @@ void task3()
 {
     const char *message = "task3 is running!\n";
     int len = strlen(message);
-    uint64_t current_timer = sys_gettime();
+
+    uint64_t current_timer = 0;
     uint64_t wait_for = current_timer + 500;
     while (1)
     {
-       // sys_yield();
-       //printf(message);
        current_timer = sys_gettime();
        printf("current_timer:%d\n",current_timer);
     }
