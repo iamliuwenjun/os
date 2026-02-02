@@ -1,3 +1,4 @@
+#include <lwjos/os.h>
 #include <lwjos/address.h>
 
 
@@ -181,14 +182,6 @@ PhysPageNum StackFrameAllocator_alloc(StackFrameAllocator *allocator) {
     /* 清空此页内存 ： 注意不能覆盖内核代码区，分配的内存只能是未使用部分*/
     PhysAddr addr = phys_addr_from_phys_page_num(ppn);
     memset(addr.value,0,PAGE_SIZE);
-    // printk("addr.vallue:%p\n",addr.value);
-    // uint8_t* ptr = get_bytes_array(ppn);
-    // for (size_t i = 0; i < PAGE_SIZE; i++)
-    // {
-        
-    //     printk("%d",ptr[i]);
-    //    // ptr++;
-    // }
     return ppn;
 }
 
@@ -214,39 +207,8 @@ void StackFrameAllocator_dealloc(StackFrameAllocator *allocator, PhysPageNum ppn
 
 
 
-// static StackFrameAllocator FrameAllocatorImpl;
-
-// void frame_allocator_test()
-// {
-//     StackFrameAllocator_new(&FrameAllocatorImpl);
-//     StackFrameAllocator_init(&FrameAllocatorImpl, \
-//             floor_phys(phys_addr_from_size_t(MEMORY_START)), \
-//             ceil_phys(phys_addr_from_size_t(MEMORY_END)));
-//     printk("Memoery start:%d\n",floor_phys(phys_addr_from_size_t(MEMORY_START)));
-//     printk("Memoery end:%d\n",ceil_phys(phys_addr_from_size_t(MEMORY_END)));
-//     PhysPageNum frame[10];
-//     for (size_t i = 0; i < 5; i++)
-//     {
-//          frame[i] = StackFrameAllocator_alloc(&FrameAllocatorImpl);
-//          printk("frame id:%d\n",frame[i].value);
-//     }
-//     for (size_t i = 0; i < 5; i++)
-//     {
-//         StackFrameAllocator_dealloc(&FrameAllocatorImpl,frame[i]);
-//         printk("allocator->recycled.data.value:%d\n",FrameAllocatorImpl.recycled.data[i]);
-//         printk("frame id:%d\n",frame[i].value);
-//     }
-//     PhysPageNum frame_test[10];
-//     for (size_t i = 0; i < 5; i++)
-//     {
-//          frame[i] = StackFrameAllocator_alloc(&FrameAllocatorImpl);
-//         printk("frame id:%d\n",frame[i].value);
-//     }
-// }
-
 StackFrameAllocator FrameAllocatorImpl;
 extern char kernelend[];
-#define PGROUNDDOWN(a) (((a)) & ~(PAGE_SIZE-1))
 void frame_alloctor_init()
 {
     // 初始化时 kernelend 需向上取整
@@ -313,6 +275,12 @@ PageTableEntry* find_pte_create(PageTable* pt,VirtPageNum vpn)
 
 }
 
+PhysPageNum kalloc(void)
+{
+    PhysPageNum frame =  StackFrameAllocator_alloc(&FrameAllocatorImpl);
+    return frame;
+}
+
 PageTableEntry* find_pte(PageTable* pt, VirtPageNum vpn)
 {
     // 拿到虚拟页号的三级索引，保存到idx数组中
@@ -374,11 +342,12 @@ void PageTable_unmap(PageTable* pt, VirtPageNum vpn)
 }
 
 extern char etext[];
+extern char trampoline[];
 
 PageTable kvmmake(void)
 {
     PageTable pt;
-    PhysPageNum root_ppn =  StackFrameAllocator_alloc(&FrameAllocatorImpl);
+    PhysPageNum root_ppn =  kalloc();
     pt.root_ppn = root_ppn;
     printk("root_ppn:%p\n",phys_addr_from_phys_page_num(root_ppn));
 
@@ -388,9 +357,18 @@ PageTable kvmmake(void)
                     (u64)etext-KERNBASE , PTE_R | PTE_X ) ;
     printk("finish kernel text map!\n");
     // map kernel data and the physical RAM we'll make use of. 
-    PageTable_map(&pt, virt_addr_from_size_t((u64)etext), phys_addr_from_size_t((u64)etext), \
-                PHYSTOP - (u64)etext , PTE_R | PTE_W | PTE_X);
+    PageTable_map(&pt,virt_addr_from_size_t((u64)etext),phys_addr_from_size_t((u64)etext ), \
+                    PHYSTOP - (u64)etext , PTE_R | PTE_W ) ;
     printk("finish kernel data and physical RAM map!\n");
+    // map the trampoline for trap entry/exit to the highest virtual address in the kernel.
+    PageTable_map(&pt, virt_addr_from_size_t(TRAMPOLINE), phys_addr_from_size_t((u64)trampoline), \
+                    PAGE_SIZE, PTE_R | PTE_X );
+    printk("finish TRAMPOLINE Page map!\n");
+
+    //allocate and map a kernel stack for each process.
+    proc_mapstacks(&pt);
+    printk("finish kernel stack map!\n");
+    
     return pt;
 }
 

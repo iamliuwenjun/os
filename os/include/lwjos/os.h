@@ -1,17 +1,19 @@
 #ifndef LOS_OS_H__
 #define LOS_OS_H__
 
-#include <stddef.h>
 #include <stdarg.h>
-#include <stdbool.h>
-#include "types.h"
-#include "context.h"
-#include "riscv.h"
-#include "task.h"
-#include "stdio.h"
-#include "syscall.h"
-
-extern void sbi_console_putchar(int ch);
+#include <lwjos/types.h>
+#include <lwjos/address.h>
+#include <lwjos/assert.h>
+#include <lwjos/context.h>
+#include <lwjos/loader.h>
+#include <lwjos/riscv.h>
+#include <lwjos/sbi.h>
+#include <lwjos/stack.h>
+#include <lwjos/stdio.h>
+#include <lwjos/string.h>
+#include <lwjos/syscall.h>
+#include <lwjos/task.h>
 
 /* trap.c */
 extern void trap_init();

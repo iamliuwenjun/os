@@ -34,6 +34,22 @@ struct TaskContext tcx_init(reg_t kstack_ptr) {
     return task_ctx;
 }
 
+/* 为每个应用程序映射内核栈,内核空间以及进行了映射 */
+void proc_mapstacks(PageTable* kpgtbl)
+{
+  struct TaskControlBlock *p;
+  
+  for(p = tasks; p < &tasks[MAX_TASKS]; p++) { // 遍历所有任务控制块
+    char *pa = (char*)phys_addr_from_phys_page_num(kalloc()).value; // 分配一页物理内存
+    if(pa == 0)
+      panic("kalloc");
+    u64 va = KSTACK((int) (p - tasks)); // 计算该任务的内核栈虚拟地址
+    PageTable_map(kpgtbl, virt_addr_from_size_t(va + PAGE_SIZE), phys_addr_from_size_t((u64)pa), \
+                  PAGE_SIZE, PTE_R | PTE_W); // 将内核栈映射到页表中
+    // 给应用内核栈赋值 
+    p->kstack = va + 2 * PAGE_SIZE; // 设置任务控制块的内核栈地址
+  }
+}
 
 void task_create(void (*task_entry)(void))
 {
