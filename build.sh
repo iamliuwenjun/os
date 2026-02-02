@@ -53,6 +53,14 @@ if [ ! -d "$SHELL_FOLDER/output/os" ]; then
 mkdir $SHELL_FOLDER/output/os
 fi
 cd $SHELL_FOLDER/os
+# 首先编译用户程序
+cd user
+make
+cd ..
+
+# 编译app加载模块
+make build_app
+./build.out
 make
 cp $SHELL_FOLDER/os/os.bin $SHELL_FOLDER/output/os/os.bin
 make clean
