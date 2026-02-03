@@ -17,6 +17,9 @@
 
 /* trap.c */
 extern void trap_init();
+extern void trap_handler();
+extern void trap_return();
+extern void set_kernel_trap_entry();
 
 /* sbi.c */
 
@@ -30,7 +33,6 @@ extern void __switch(TaskContext *current_task_cx_ptr,TaskContext* next_task_cx_
 
 /* task.c */
 extern void schedule();
-extern void task_create(void (*task_entry)(void));
 extern void run_first_task();
 
 /* app.c */

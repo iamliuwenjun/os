@@ -341,8 +341,8 @@ void PageTable_unmap(PageTable* pt, VirtPageNum vpn)
     *pte = PageTableEntry_empty();
 }
 
-extern char etext[];
-extern char trampoline[];
+extern char etext[];     //os.ld中定义 为物理地址
+extern char trampoline[];//os.ld中定义 为物理地址
 
 PageTable kvmmake(void)
 {
@@ -373,30 +373,21 @@ PageTable kvmmake(void)
 }
 
 PageTable kernel_pagetable;
-
+u64 kernel_satp;
 void kvminit()
 {
   kernel_pagetable = kvmmake();
+  kernel_satp = MAKE_SATP(kernel_pagetable.root_ppn.value);
 }
-
-#define SATP_SV39 (8L << 60)
-#define MAKE_SATP(pagetable) (SATP_SV39 | (((u64)pagetable)))
 
 void kvminithart()
 {
   // wait for any previous writes to the page table memory to finish.
-  printk("satp:%lx\n",MAKE_SATP(kernel_pagetable.root_ppn.value));
   sfence_vma();
-  
-  w_satp(MAKE_SATP(kernel_pagetable.root_ppn.value));
-  
+  w_satp(kernel_satp);
   // flush stale entries from the TLB.
   sfence_vma();
   reg_t satp = r_satp();
-
-  printk("satp:%lx\n",satp);
-
-    
 }
 
 

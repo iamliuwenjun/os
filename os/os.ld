@@ -9,10 +9,10 @@ SECTIONS
 {
     skernel = .;   /* 定义内核起始内存地址 */
 	.text : {
-        *(.text.entry)
+        *(.text.entry) /* 对应entry.S 其开头有写 */
         . = ALIGN(4K);
         trampoline = .;
-        *(.text.trampoline);
+        *(.text.trampoline); /* 对应kelneltrap.S 其开头有写 */
         . = ALIGN(4K);
 		_strampoline = .;
 		*(.text .text.*)

@@ -25,6 +25,12 @@ typedef struct TaskControlBlock
 
 /* 映射用户程序内核栈 */
 void proc_mapstacks(PageTable* kpgtbl);
-
-
+/* 创建应用页表 */
+TaskControlBlock*  task_create_pt(size_t app_id);
+/* 初始化应用程序 */
+void app_init(size_t app_id);
+/* 获取当前执行应用程序trap上下文地址 */
+u64 get_current_trap_cx();
+/*返回当前执行的应用程序的satp token*/
+u64 current_user_token();
 #endif
