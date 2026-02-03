@@ -21,6 +21,10 @@ extern void trap_handler();
 extern void trap_return();
 extern void set_kernel_trap_entry();
 
+/* kerneltrap.S*/
+extern void __alltraps(void);
+extern void __restore(TrapContext *next);
+
 /* sbi.c */
 
 /* kerneltrap.S*/

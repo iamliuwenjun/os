@@ -1,11 +1,13 @@
-#include <lwjos/os.h>
+#include <lwjos/types.h>
+#include <lwjos/syscall.h>
+#include <lwjos/string.h>
 int main()
 {
 
-    const char *message = "task write is running!\n";
     while (1)
     {
-       printf(message);
+        char data = getchar();
+        printf("%c",data);
     }
     return 0;
 }

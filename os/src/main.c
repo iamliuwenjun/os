@@ -20,10 +20,10 @@ void os_main()
    //trap初始化
    set_kernel_trap_entry();
 
+   get_app_names();
 
    timer_init();
 
-   
    run_first_task();
 
 }

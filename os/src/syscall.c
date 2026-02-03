@@ -1,24 +1,7 @@
 #include <lwjos/os.h>
 #include <lwjos/stdio.h>
 
-uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
-        switch (syscall_id)
-        {
-        case __NR_write:
-            __sys_write(arg1, arg2, arg3);
-            break;
-        case __NR_sched_yield:
-            __sys_yield();
-            break;
-        case __NR_gettimeofday:
-            return __sys_gettime();
-        default:
-            printk("Unsupported syscall id:%d\n",syscall_id);
-            break;
-        }
-}
-
-void translated_byte_buffer(const char* data , size_t len)
+char * translated_byte_buffer(const char* data , size_t len)
 {
     u64  user_satp = current_user_token();  
     PageTable  pt ;
@@ -34,21 +17,38 @@ void translated_byte_buffer(const char* data , size_t len)
     u64 phyaddr = ( pte->bits & mask) << 2 ;
     //拿到偏移地址
     u64 page_offset = start_va & 0xFFF;
-
     u64 data_d = phyaddr + page_offset;
-    char *data_p = (char*) data_d;
-    printk("%s",data_p); 
-     
+    return (char*) data_d;
 }
+
 void __sys_write(size_t fd, const char* data, size_t len)
 {
+
     if(fd == stdout || fd == stderr)
     {
-        translated_byte_buffer(data,len);
+       char* str =  translated_byte_buffer(data,len);
+       printk("%s",str);
     }
     else
     {
         panic("Unsupported fd in sys_write!");
+    }
+}
+
+void __sys_read(size_t fd, const char* data, size_t len)
+{
+    if(fd == stdin)
+    {
+        int c ;
+        assert( len == 1);
+        while (1)
+        {
+            c = sbi_console_getchar();
+            if(c != -1)
+                break;
+        }
+        char* str = translated_byte_buffer(data , len);
+        str[0]  = c;
     }
 }
 
@@ -60,4 +60,23 @@ void __sys_yield()
 uint64_t __sys_gettime()
 {
     return get_time_us();
+}
+
+uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {
+        switch (syscall_id)
+        {
+        case __NR_write:
+            __sys_write(arg1, arg2, arg3);
+            break;
+        case __NR_read:
+            __sys_read(arg1, arg2, arg3);
+        case __NR_sched_yield:
+            __sys_yield();
+            break;
+        case __NR_gettimeofday:
+            return __sys_gettime();
+        default:
+            printk("Unsupported syscall id:%d\n",syscall_id);
+            break;
+        }
 }

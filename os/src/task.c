@@ -1,14 +1,10 @@
 #include <lwjos/os.h>
 #include <lwjos/stdio.h>
-#define USER_STACK_SIZE (4096 * 2)
-#define KERNEL_STACK_SIZE (4096 * 2)
 
 #define MAX_TASKS 10
 static int _current = 0;
 static int _top = 0;
 
-uint8_t KernelStack[MAX_TASKS][KERNEL_STACK_SIZE];
-uint8_t UserStack[MAX_TASKS][USER_STACK_SIZE];
 
 struct TaskControlBlock tasks[MAX_TASKS];
 
@@ -44,10 +40,10 @@ void proc_mapstacks(PageTable* kpgtbl)
     if(pa == 0)
       panic("kalloc");
     u64 va = KSTACK((int) (p - tasks)); // 计算该任务的内核栈虚拟地址
-    PageTable_map(kpgtbl, virt_addr_from_size_t(va + PAGE_SIZE), phys_addr_from_size_t((u64)pa), \
+    PageTable_map(kpgtbl, virt_addr_from_size_t(va), phys_addr_from_size_t((u64)pa), \
                   PAGE_SIZE, PTE_R | PTE_W); // 将内核栈映射到页表中
     // 给应用内核栈赋值 
-    p->kstack = va + 2 * PAGE_SIZE; // 设置任务控制块的内核栈地址
+    p->kstack = va + PAGE_SIZE; // 设置任务控制块的内核栈地址
   }
 }
 
@@ -56,7 +52,7 @@ void proc_trap(struct TaskControlBlock *p)
 {
   // 为每个程序分配一页trap物理内存
   p->trap_cx_ppn = phys_addr_from_phys_page_num(kalloc()).value;
-  printk("trap value : %p\n",p->trap_cx_ppn);
+  //printk("trap value : %p\n",p->trap_cx_ppn);
   // 初始化任务上下文全部为0
   memset(&p->task_context, 0 ,sizeof(p->task_context));
 }
@@ -72,13 +68,13 @@ void proc_pagetable(struct TaskControlBlock *p)
   //映射跳板页
   PageTable_map(&pagetable,virt_addr_from_size_t(TRAMPOLINE),phys_addr_from_size_t((u64)trampoline),\
                 PAGE_SIZE , PTE_R | PTE_X);
-  printk("finish user TRAMPOLINE map!\n");
+  //printk("finish user TRAMPOLINE map!\n");
   //映射用户程序的trap页
   PageTable_map(&pagetable,virt_addr_from_size_t(TRAPFRAME),phys_addr_from_size_t(p->trap_cx_ppn), \
                 PAGE_SIZE, PTE_R | PTE_W );
-  printk("finish user TRAPFRAME map!\n");
+  //printk("finish user TRAPFRAME map!\n");
   p->pagetable = pagetable;
-  printk("p->pagetable:%p\n",p->pagetable.root_ppn.value);
+  //printk("p->pagetable:%p\n",p->pagetable.root_ppn.value);
 }
 
 TaskControlBlock* task_create_pt(size_t app_id)
@@ -106,20 +102,20 @@ void app_init(size_t app_id)
     w_sstatus(sstatus);
     // 设置程序入口地址
     cx_ptr->sepc = tasks[app_id].entry;
-    printk("cx_ptr->sepc:%p\n",cx_ptr->sepc);
+    //printk("cx_ptr->sepc:%p\n",cx_ptr->sepc);
     // 
     cx_ptr->sstatus = sstatus; 
     // 设置用户栈虚拟地址
     cx_ptr->sp = tasks[app_id].ustack;
-    printk("cx_ptr->sp:%p\n",cx_ptr->sp);
+    //printk("cx_ptr->sp:%p\n",cx_ptr->sp);
     // 设置内核页表token
     cx_ptr->kernel_satp = kernel_satp;
     // 设置内核栈虚拟地址
     cx_ptr->kernel_sp = tasks[app_id].kstack;
-    printk("cx_ptr->kernel_sp:%p\n",cx_ptr->kernel_sp);
+    //printk("cx_ptr->kernel_sp:%p\n",cx_ptr->kernel_sp);
     // 设置内核trap_handler的地址
     cx_ptr->trap_handler = (u64)trap_handler;
-    printk("cx_ptr->trap_handler:%p\n",cx_ptr->trap_handler);
+    //printk("cx_ptr->trap_handler:%p\n",cx_ptr->trap_handler);
 
     /* 构造每个任务任务控制块中的任务上下文，设置 ra 寄存器为 trap_return 的入口地址*/
     tasks[app_id].task_context = tcx_init((reg_t)cx_ptr);

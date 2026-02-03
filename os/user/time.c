@@ -6,7 +6,7 @@ int main()
     while (1)
     {
         current_timer = sys_gettime();
-        printf("current_timer:%x\n",current_timer);
+        //printf("current_timer:%x\n",current_timer);
     }   
     return 0;
 }

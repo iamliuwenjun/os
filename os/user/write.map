@@ -6,57 +6,60 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
-LOAD /tmp/ccA0vcUy.o
-LOAD /tmp/ccu7w7oB.o
-LOAD /tmp/cc54LfeB.o
-LOAD /tmp/cc3gYFuB.o
-LOAD /tmp/cceXDrOy.o
+LOAD /tmp/ccYczbSV.o
+LOAD /tmp/ccJ2pYFU.o
+LOAD /tmp/ccpefawR.o
+LOAD /tmp/cctfujrR.o
+LOAD /tmp/ccKcJjqV.o
                 0x0000000000010000                BASE_ADDRESS = 0x10000
                 0x0000000000010000                . = BASE_ADDRESS
 
-.text           0x0000000000010000      0x6a0
+.text           0x0000000000010000      0x706
  *(.text.entry)
  *(.text .text.*)
- .text          0x0000000000010000       0x1e /tmp/ccA0vcUy.o
+ .text          0x0000000000010000       0x28 /tmp/ccYczbSV.o
                 0x0000000000010000                main
- .text          0x000000000001001e       0xc2 /tmp/ccu7w7oB.o
-                0x0000000000010088                printf
- .text          0x00000000000100e0       0xe2 /tmp/cc54LfeB.o
-                0x00000000000100e0                strlen
-                0x000000000001011c                memcpy
-                0x0000000000010172                memset
- .text          0x00000000000101c2       0xae /tmp/cc3gYFuB.o
-                0x00000000000101c2                syscall
-                0x00000000000101f6                sys_write
-                0x000000000001022c                sys_yield
-                0x000000000001024e                sys_gettime
- .text          0x0000000000010270      0x430 /tmp/cceXDrOy.o
-                0x0000000000010270                _vsnprintf
+ .text          0x0000000000010028       0xc2 /tmp/ccJ2pYFU.o
+                0x0000000000010092                printf
+ .text          0x00000000000100ea       0xe2 /tmp/ccpefawR.o
+                0x00000000000100ea                strlen
+                0x0000000000010126                memcpy
+                0x000000000001017c                memset
+ .text          0x00000000000101cc      0x10a /tmp/cctfujrR.o
+                0x00000000000101cc                syscall
+                0x0000000000010200                sys_write
+                0x0000000000010236                sys_yield
+                0x0000000000010258                sys_gettime
+                0x000000000001027a                sys_read
+                0x00000000000102b2                getchar
+ .text          0x00000000000102d6      0x430 /tmp/ccKcJjqV.o
+                0x00000000000102d6                _vsnprintf
                 0x0000000000011000                . = ALIGN (0x1000)
 
-.rodata         0x0000000000011000       0x70
+.rodata         0x0000000000011000       0x5c
  *(.rodata .rodata.*)
- .rodata        0x0000000000011000       0x18 /tmp/ccA0vcUy.o
- .rodata        0x0000000000011018       0x58 /tmp/cceXDrOy.o
+ .rodata        0x0000000000011000        0x3 /tmp/ccYczbSV.o
+ *fill*         0x0000000000011003        0x1 
+ .rodata        0x0000000000011004       0x58 /tmp/ccKcJjqV.o
  *(.srodata .srodata.*)
                 0x0000000000012000                . = ALIGN (0x1000)
 
 .data           0x0000000000012000        0x0
  *(.data .data.*)
- .data          0x0000000000012000        0x0 /tmp/ccA0vcUy.o
- .data          0x0000000000012000        0x0 /tmp/ccu7w7oB.o
- .data          0x0000000000012000        0x0 /tmp/cc54LfeB.o
- .data          0x0000000000012000        0x0 /tmp/cc3gYFuB.o
- .data          0x0000000000012000        0x0 /tmp/cceXDrOy.o
+ .data          0x0000000000012000        0x0 /tmp/ccYczbSV.o
+ .data          0x0000000000012000        0x0 /tmp/ccJ2pYFU.o
+ .data          0x0000000000012000        0x0 /tmp/ccpefawR.o
+ .data          0x0000000000012000        0x0 /tmp/cctfujrR.o
+ .data          0x0000000000012000        0x0 /tmp/ccKcJjqV.o
  *(.sdata .sdata.*)
 
 .bss            0x0000000000012000      0x3e8
  *(.bss .bss.*)
- .bss           0x0000000000012000        0x0 /tmp/ccA0vcUy.o
- .bss           0x0000000000012000      0x3e8 /tmp/ccu7w7oB.o
- .bss           0x00000000000123e8        0x0 /tmp/cc54LfeB.o
- .bss           0x00000000000123e8        0x0 /tmp/cc3gYFuB.o
- .bss           0x00000000000123e8        0x0 /tmp/cceXDrOy.o
+ .bss           0x0000000000012000        0x0 /tmp/ccYczbSV.o
+ .bss           0x0000000000012000      0x3e8 /tmp/ccJ2pYFU.o
+ .bss           0x00000000000123e8        0x0 /tmp/ccpefawR.o
+ .bss           0x00000000000123e8        0x0 /tmp/cctfujrR.o
+ .bss           0x00000000000123e8        0x0 /tmp/ccKcJjqV.o
  *(.sbss .sbss.*)
 
 /DISCARD/
@@ -65,22 +68,22 @@ LOAD /tmp/cceXDrOy.o
 OUTPUT(bin/write elf64-littleriscv)
 
 .comment        0x0000000000000000        0xf
- .comment       0x0000000000000000        0xf /tmp/ccA0vcUy.o
+ .comment       0x0000000000000000        0xf /tmp/ccYczbSV.o
                                          0x10 (size before relaxing)
- .comment       0x000000000000000f       0x10 /tmp/ccu7w7oB.o
- .comment       0x000000000000000f       0x10 /tmp/cc54LfeB.o
- .comment       0x000000000000000f       0x10 /tmp/cc3gYFuB.o
- .comment       0x000000000000000f       0x10 /tmp/cceXDrOy.o
+ .comment       0x000000000000000f       0x10 /tmp/ccJ2pYFU.o
+ .comment       0x000000000000000f       0x10 /tmp/ccpefawR.o
+ .comment       0x000000000000000f       0x10 /tmp/cctfujrR.o
+ .comment       0x000000000000000f       0x10 /tmp/ccKcJjqV.o
 
 .riscv.attributes
                 0x0000000000000000       0x53
  .riscv.attributes
-                0x0000000000000000       0x53 /tmp/ccA0vcUy.o
+                0x0000000000000000       0x53 /tmp/ccYczbSV.o
  .riscv.attributes
-                0x0000000000000053       0x53 /tmp/ccu7w7oB.o
+                0x0000000000000053       0x53 /tmp/ccJ2pYFU.o
  .riscv.attributes
-                0x00000000000000a6       0x53 /tmp/cc54LfeB.o
+                0x00000000000000a6       0x53 /tmp/ccpefawR.o
  .riscv.attributes
-                0x00000000000000f9       0x53 /tmp/cc3gYFuB.o
+                0x00000000000000f9       0x53 /tmp/cctfujrR.o
  .riscv.attributes
-                0x000000000000014c       0x53 /tmp/cceXDrOy.o
+                0x000000000000014c       0x53 /tmp/ccKcJjqV.o
