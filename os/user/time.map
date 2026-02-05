@@ -6,58 +6,61 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
-LOAD /tmp/cc5NF3EM.o
-LOAD /tmp/ccCpQKGM.o
-LOAD /tmp/ccm83EEL.o
-LOAD /tmp/cc2HBo0N.o
-LOAD /tmp/ccFVAgcL.o
+LOAD /tmp/ccklkAcw.o
+LOAD /tmp/cctCu4Hv.o
+LOAD /tmp/ccOwbLHv.o
+LOAD /tmp/cc04C5Bv.o
+LOAD /tmp/ccRILrUy.o
                 0x0000000000010000                BASE_ADDRESS = 0x10000
                 0x0000000000010000                . = BASE_ADDRESS
 
-.text           0x0000000000010000      0x6f4
+.text           0x0000000000010000      0x742
  *(.text.entry)
  *(.text .text.*)
- .text          0x0000000000010000       0x16 /tmp/cc5NF3EM.o
+ .text          0x0000000000010000       0x40 /tmp/ccklkAcw.o
                 0x0000000000010000                main
- .text          0x0000000000010016       0xc2 /tmp/ccCpQKGM.o
-                0x0000000000010080                printf
- .text          0x00000000000100d8       0xe2 /tmp/ccm83EEL.o
-                0x00000000000100d8                strlen
-                0x0000000000010114                memcpy
-                0x000000000001016a                memset
- .text          0x00000000000101ba      0x10a /tmp/cc2HBo0N.o
-                0x00000000000101ba                syscall
-                0x00000000000101ee                sys_write
-                0x0000000000010224                sys_yield
-                0x0000000000010246                sys_gettime
-                0x0000000000010268                sys_read
-                0x00000000000102a0                getchar
- .text          0x00000000000102c4      0x430 /tmp/ccFVAgcL.o
-                0x00000000000102c4                _vsnprintf
+ .text          0x0000000000010040       0xc2 /tmp/cctCu4Hv.o
+                0x00000000000100aa                printf
+ .text          0x0000000000010102       0xe2 /tmp/ccOwbLHv.o
+                0x0000000000010102                strlen
+                0x000000000001013e                memcpy
+                0x0000000000010194                memset
+ .text          0x00000000000101e4      0x12e /tmp/cc04C5Bv.o
+                0x00000000000101e4                syscall
+                0x0000000000010218                sys_write
+                0x000000000001024e                sys_yield
+                0x0000000000010270                sys_gettime
+                0x0000000000010292                sys_read
+                0x00000000000102ca                sys_fork
+                0x00000000000102ee                getchar
+ .text          0x0000000000010312      0x430 /tmp/ccRILrUy.o
+                0x0000000000010312                _vsnprintf
                 0x0000000000011000                . = ALIGN (0x1000)
 
-.rodata         0x0000000000011000       0x58
+.rodata         0x0000000000011000       0x68
  *(.rodata .rodata.*)
- .rodata        0x0000000000011000       0x58 /tmp/ccFVAgcL.o
+ .rodata        0x0000000000011000        0xf /tmp/ccklkAcw.o
+ *fill*         0x000000000001100f        0x1 
+ .rodata        0x0000000000011010       0x58 /tmp/ccRILrUy.o
  *(.srodata .srodata.*)
                 0x0000000000012000                . = ALIGN (0x1000)
 
 .data           0x0000000000012000        0x0
  *(.data .data.*)
- .data          0x0000000000012000        0x0 /tmp/cc5NF3EM.o
- .data          0x0000000000012000        0x0 /tmp/ccCpQKGM.o
- .data          0x0000000000012000        0x0 /tmp/ccm83EEL.o
- .data          0x0000000000012000        0x0 /tmp/cc2HBo0N.o
- .data          0x0000000000012000        0x0 /tmp/ccFVAgcL.o
+ .data          0x0000000000012000        0x0 /tmp/ccklkAcw.o
+ .data          0x0000000000012000        0x0 /tmp/cctCu4Hv.o
+ .data          0x0000000000012000        0x0 /tmp/ccOwbLHv.o
+ .data          0x0000000000012000        0x0 /tmp/cc04C5Bv.o
+ .data          0x0000000000012000        0x0 /tmp/ccRILrUy.o
  *(.sdata .sdata.*)
 
 .bss            0x0000000000012000      0x3e8
  *(.bss .bss.*)
- .bss           0x0000000000012000        0x0 /tmp/cc5NF3EM.o
- .bss           0x0000000000012000      0x3e8 /tmp/ccCpQKGM.o
- .bss           0x00000000000123e8        0x0 /tmp/ccm83EEL.o
- .bss           0x00000000000123e8        0x0 /tmp/cc2HBo0N.o
- .bss           0x00000000000123e8        0x0 /tmp/ccFVAgcL.o
+ .bss           0x0000000000012000        0x0 /tmp/ccklkAcw.o
+ .bss           0x0000000000012000      0x3e8 /tmp/cctCu4Hv.o
+ .bss           0x00000000000123e8        0x0 /tmp/ccOwbLHv.o
+ .bss           0x00000000000123e8        0x0 /tmp/cc04C5Bv.o
+ .bss           0x00000000000123e8        0x0 /tmp/ccRILrUy.o
  *(.sbss .sbss.*)
 
 /DISCARD/
@@ -66,22 +69,22 @@ LOAD /tmp/ccFVAgcL.o
 OUTPUT(bin/time elf64-littleriscv)
 
 .comment        0x0000000000000000        0xf
- .comment       0x0000000000000000        0xf /tmp/cc5NF3EM.o
+ .comment       0x0000000000000000        0xf /tmp/ccklkAcw.o
                                          0x10 (size before relaxing)
- .comment       0x000000000000000f       0x10 /tmp/ccCpQKGM.o
- .comment       0x000000000000000f       0x10 /tmp/ccm83EEL.o
- .comment       0x000000000000000f       0x10 /tmp/cc2HBo0N.o
- .comment       0x000000000000000f       0x10 /tmp/ccFVAgcL.o
+ .comment       0x000000000000000f       0x10 /tmp/cctCu4Hv.o
+ .comment       0x000000000000000f       0x10 /tmp/ccOwbLHv.o
+ .comment       0x000000000000000f       0x10 /tmp/cc04C5Bv.o
+ .comment       0x000000000000000f       0x10 /tmp/ccRILrUy.o
 
 .riscv.attributes
                 0x0000000000000000       0x53
  .riscv.attributes
-                0x0000000000000000       0x53 /tmp/cc5NF3EM.o
+                0x0000000000000000       0x53 /tmp/ccklkAcw.o
  .riscv.attributes
-                0x0000000000000053       0x53 /tmp/ccCpQKGM.o
+                0x0000000000000053       0x53 /tmp/cctCu4Hv.o
  .riscv.attributes
-                0x00000000000000a6       0x53 /tmp/ccm83EEL.o
+                0x00000000000000a6       0x53 /tmp/ccOwbLHv.o
  .riscv.attributes
-                0x00000000000000f9       0x53 /tmp/cc2HBo0N.o
+                0x00000000000000f9       0x53 /tmp/cc04C5Bv.o
  .riscv.attributes
-                0x000000000000014c       0x53 /tmp/ccFVAgcL.o
+                0x000000000000014c       0x53 /tmp/ccRILrUy.o

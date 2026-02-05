@@ -9,6 +9,8 @@ void os_main()
    
    //初始化内存
    kvminit();
+   //初始化进程
+   procinit();
 
    load_app(0);
    app_init(0);

@@ -47,7 +47,7 @@ void get_app_names()
         printk("%s\n",app_names[i]);
         
     }
-    printk("**************/");
+    printk("**************/\n");
     
 }
 
@@ -120,5 +120,5 @@ void load_app(size_t app_id)
     u64 paddr = phys_addr_from_phys_page_num(ppn).value;
     PageTable_map(&proc->pagetable,virt_addr_from_size_t(proc->ustack - PAGE_SIZE),phys_addr_from_size_t(paddr), \
                   PAGE_SIZE, PTE_R | PTE_W | PTE_U);
-               
+    proc->base_size=proc->ustack;           
 }
