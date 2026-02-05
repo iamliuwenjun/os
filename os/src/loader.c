@@ -92,7 +92,7 @@ void load_app(size_t app_id)
         {
             // 获取映射内存段开始位置
             u64 start_va = phdr->p_vaddr;
-            // 获取映射内存段结束位置
+            // 获取映射内存段结束位置 先用ustack存，并不代表是用户栈的意思
             proc->ustack = start_va + phdr->p_memsz;
             //  转换elf的可读，可写，可执行的 flags
             u8 map_perm = PTE_U | flags_to_mmap_prot(phdr->p_flags);

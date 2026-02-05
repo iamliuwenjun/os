@@ -118,7 +118,7 @@ void app_init(size_t app_id)
     //printk("cx_ptr->trap_handler:%p\n",cx_ptr->trap_handler);
 
     /* 构造每个任务任务控制块中的任务上下文，设置 ra 寄存器为 trap_return 的入口地址*/
-    tasks[app_id].task_context = tcx_init((reg_t)cx_ptr);
+    tasks[app_id].task_context = tcx_init((reg_t)tasks[app_id].kstack);
     // 初始化 TaskStatus 字段为 Ready
     tasks[app_id].task_state = Ready;
 }
