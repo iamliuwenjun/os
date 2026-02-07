@@ -234,14 +234,14 @@ int __sys_fork()
   // 子进程返回值为0
   TrapContext* cx_ptr = np->trap_cx_ppn;
   cx_ptr->a0 = 0;
+  cx_ptr->kernel_sp = np->kstack;
   // 复制TCB的信息
   np->entry = p->entry;
   np->base_size = p->base_size;
   np->parent = p;
   np->ustack = p->ustack;
   // 设置子进程返回地址和内核栈
-  np->task_context.ra = trap_return;
-  np->task_context.sp = np->kstack;
+  np->task_context = tcx_init((reg_t)np->kstack);
 
   _top++;
   return np->pid;
