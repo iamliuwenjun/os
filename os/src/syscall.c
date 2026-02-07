@@ -46,6 +46,8 @@ void __sys_read(size_t fd, const char* data, size_t len)
             c = sbi_console_getchar();
             if(c != -1)
                 break;
+            schedule();
+            continue;
         }
         char* str = translated_byte_buffer(data);
         str[0]  = c;
