@@ -92,7 +92,9 @@ VirtAddr virt_addr_from_size_t(uint64_t v);
 PhysAddr phys_addr_from_size_t(uint64_t v);
 PhysAddr phys_addr_from_phys_page_num(PhysPageNum ppn);
 VirtPageNum virt_page_num_from_virt_addr(VirtAddr virt_addr);
+VirtPageNum virt_page_num_from_size_t(uint64_t v);
 VirtPageNum floor_virts(VirtAddr virt_addr);
 int uvmcopy(PageTable* old, PageTable* new, u64 sz);
+void proc_freepagetable(PageTable* pagetable, u64 sz);
 
 #endif
