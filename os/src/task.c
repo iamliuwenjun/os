@@ -87,6 +87,15 @@ void proc_pagetable(struct TaskControlBlock *p)
   //printk("p->pagetable:%p\n",p->pagetable.root_ppn.value);
 }
 
+void proc_ustack(struct TaskControlBlock *p)
+{
+      // 映射应用程序用户栈开始地址
+    PhysPageNum ppn = kalloc();
+    u64 paddr = phys_addr_from_phys_page_num(ppn).value;
+    PageTable_map(&p->pagetable,virt_addr_from_size_t(p->ustack - PAGE_SIZE),phys_addr_from_size_t(paddr), \
+                  PAGE_SIZE, PTE_R | PTE_W | PTE_U);
+}
+
 TaskControlBlock* task_create_pt(size_t app_id)
 {
   if(_top < MAX_TASKS)

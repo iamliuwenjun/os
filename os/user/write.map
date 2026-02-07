@@ -6,27 +6,27 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
-LOAD /tmp/ccVw0yUH.o
-LOAD /tmp/ccnl1pHH.o
-LOAD /tmp/ccWKHvaG.o
-LOAD /tmp/ccwBe4zG.o
-LOAD /tmp/ccG4q5hF.o
+LOAD /tmp/ccxM7PV1.o
+LOAD /tmp/ccfWD1o1.o
+LOAD /tmp/cc8NS2HZ.o
+LOAD /tmp/ccLDHSSZ.o
+LOAD /tmp/cc6i93A1.o
                 0x0000000000010000                BASE_ADDRESS = 0x10000
                 0x0000000000010000                . = BASE_ADDRESS
 
 .text           0x0000000000010000      0x7d8
  *(.text.entry)
  *(.text .text.*)
- .text          0x0000000000010000       0x20 /tmp/ccVw0yUH.o
+ .text          0x0000000000010000       0x20 /tmp/ccxM7PV1.o
                 0x0000000000010000                main
- .text          0x0000000000010020       0xc2 /tmp/ccnl1pHH.o
+ .text          0x0000000000010020       0xc2 /tmp/ccfWD1o1.o
                 0x000000000001008a                printf
- .text          0x00000000000100e2      0x16c /tmp/ccWKHvaG.o
+ .text          0x00000000000100e2      0x16c /tmp/cc8NS2HZ.o
                 0x00000000000100e2                strlen
                 0x000000000001011e                memcpy
                 0x0000000000010174                memset
                 0x00000000000101c4                strcmp
- .text          0x000000000001024e      0x15a /tmp/ccwBe4zG.o
+ .text          0x000000000001024e      0x15a /tmp/ccLDHSSZ.o
                 0x000000000001024e                syscall
                 0x0000000000010282                sys_write
                 0x00000000000102b8                sys_yield
@@ -35,33 +35,33 @@ LOAD /tmp/ccG4q5hF.o
                 0x0000000000010334                sys_fork
                 0x0000000000010358                sys_exec
                 0x0000000000010384                getchar
- .text          0x00000000000103a8      0x430 /tmp/ccG4q5hF.o
+ .text          0x00000000000103a8      0x430 /tmp/cc6i93A1.o
                 0x00000000000103a8                _vsnprintf
                 0x0000000000011000                . = ALIGN (0x1000)
 
 .rodata         0x0000000000011000       0x5c
  *(.rodata .rodata.*)
- .rodata        0x0000000000011000        0x4 /tmp/ccVw0yUH.o
- .rodata        0x0000000000011004       0x58 /tmp/ccG4q5hF.o
+ .rodata        0x0000000000011000        0x4 /tmp/ccxM7PV1.o
+ .rodata        0x0000000000011004       0x58 /tmp/cc6i93A1.o
  *(.srodata .srodata.*)
                 0x0000000000012000                . = ALIGN (0x1000)
 
 .data           0x0000000000012000        0x0
  *(.data .data.*)
- .data          0x0000000000012000        0x0 /tmp/ccVw0yUH.o
- .data          0x0000000000012000        0x0 /tmp/ccnl1pHH.o
- .data          0x0000000000012000        0x0 /tmp/ccWKHvaG.o
- .data          0x0000000000012000        0x0 /tmp/ccwBe4zG.o
- .data          0x0000000000012000        0x0 /tmp/ccG4q5hF.o
+ .data          0x0000000000012000        0x0 /tmp/ccxM7PV1.o
+ .data          0x0000000000012000        0x0 /tmp/ccfWD1o1.o
+ .data          0x0000000000012000        0x0 /tmp/cc8NS2HZ.o
+ .data          0x0000000000012000        0x0 /tmp/ccLDHSSZ.o
+ .data          0x0000000000012000        0x0 /tmp/cc6i93A1.o
  *(.sdata .sdata.*)
 
 .bss            0x0000000000012000      0x3e8
  *(.bss .bss.*)
- .bss           0x0000000000012000        0x0 /tmp/ccVw0yUH.o
- .bss           0x0000000000012000      0x3e8 /tmp/ccnl1pHH.o
- .bss           0x00000000000123e8        0x0 /tmp/ccWKHvaG.o
- .bss           0x00000000000123e8        0x0 /tmp/ccwBe4zG.o
- .bss           0x00000000000123e8        0x0 /tmp/ccG4q5hF.o
+ .bss           0x0000000000012000        0x0 /tmp/ccxM7PV1.o
+ .bss           0x0000000000012000      0x3e8 /tmp/ccfWD1o1.o
+ .bss           0x00000000000123e8        0x0 /tmp/cc8NS2HZ.o
+ .bss           0x00000000000123e8        0x0 /tmp/ccLDHSSZ.o
+ .bss           0x00000000000123e8        0x0 /tmp/cc6i93A1.o
  *(.sbss .sbss.*)
 
 /DISCARD/
@@ -70,22 +70,22 @@ LOAD /tmp/ccG4q5hF.o
 OUTPUT(bin/write elf64-littleriscv)
 
 .comment        0x0000000000000000        0xf
- .comment       0x0000000000000000        0xf /tmp/ccVw0yUH.o
+ .comment       0x0000000000000000        0xf /tmp/ccxM7PV1.o
                                          0x10 (size before relaxing)
- .comment       0x000000000000000f       0x10 /tmp/ccnl1pHH.o
- .comment       0x000000000000000f       0x10 /tmp/ccWKHvaG.o
- .comment       0x000000000000000f       0x10 /tmp/ccwBe4zG.o
- .comment       0x000000000000000f       0x10 /tmp/ccG4q5hF.o
+ .comment       0x000000000000000f       0x10 /tmp/ccfWD1o1.o
+ .comment       0x000000000000000f       0x10 /tmp/cc8NS2HZ.o
+ .comment       0x000000000000000f       0x10 /tmp/ccLDHSSZ.o
+ .comment       0x000000000000000f       0x10 /tmp/cc6i93A1.o
 
 .riscv.attributes
                 0x0000000000000000       0x53
  .riscv.attributes
-                0x0000000000000000       0x53 /tmp/ccVw0yUH.o
+                0x0000000000000000       0x53 /tmp/ccxM7PV1.o
  .riscv.attributes
-                0x0000000000000053       0x53 /tmp/ccnl1pHH.o
+                0x0000000000000053       0x53 /tmp/ccfWD1o1.o
  .riscv.attributes
-                0x00000000000000a6       0x53 /tmp/ccWKHvaG.o
+                0x00000000000000a6       0x53 /tmp/cc8NS2HZ.o
  .riscv.attributes
-                0x00000000000000f9       0x53 /tmp/ccwBe4zG.o
+                0x00000000000000f9       0x53 /tmp/ccLDHSSZ.o
  .riscv.attributes
-                0x000000000000014c       0x53 /tmp/ccG4q5hF.o
+                0x000000000000014c       0x53 /tmp/cc6i93A1.o
