@@ -62,107 +62,117 @@ LOAD loader.o
                 0x00000000802021e4                uart_puts
                 0x00000000802022a0                printk
                 0x00000000802022f8                panic
- .text          0x0000000080202326      0x1b6 trap.o
+ .text          0x0000000080202326      0x1c6 trap.o
                 0x000000008020235a                trap_from_kernel
                 0x0000000080202378                set_kernel_trap_entry
                 0x0000000080202398                set_user_trap_entry
                 0x00000000802023b8                trap_handler
-                0x000000008020247a                trap_return
- .text          0x00000000802024dc      0x288 syscall.o
-                0x00000000802024dc                translated_byte_buffer
-                0x000000008020257a                __sys_write
-                0x00000000802025dc                __sys_read
-                0x0000000080202666                __sys_yield
-                0x000000008020267c                __sys_gettime
-                0x0000000080202694                __SYSCALL
- .text          0x0000000080202764       0xe2 string.o
-                0x0000000080202764                strlen
-                0x00000000802027a0                memcpy
-                0x00000000802027f6                memset
- .text          0x0000000080202846      0x12e app.o
-                0x0000000080202846                syscall
-                0x000000008020287a                sys_write
-                0x00000000802028b0                sys_yield
-                0x00000000802028d2                sys_gettime
-                0x00000000802028f4                sys_read
-                0x000000008020292c                sys_fork
-                0x0000000080202950                getchar
- .text          0x0000000080202974      0x7e2 task.o
-                0x00000000802029a8                tcx_init
-                0x0000000080202a20                procinit
-                0x0000000080202a62                proc_mapstacks
-                0x0000000080202b3e                proc_trap
-                0x0000000080202b7c                proc_pagetable
-                0x0000000080202c06                task_create_pt
-                0x0000000080202c96                app_init
-                0x0000000080202df6                get_current_trap_cx
-                0x0000000080202e22                current_user_token
-                0x0000000080202e54                schedule
-                0x0000000080202f5c                run_first_task
-                0x0000000080202fa0                current_proc
-                0x0000000080202fca                allocpid
-                0x0000000080203004                allocproc
-                0x0000000080203078                __sys_fork
- .text          0x0000000080203156      0x124 timer.o
-                0x00000000802031d8                set_next_trigger
-                0x0000000080203200                timer_init
-                0x000000008020324e                get_time_us
- .text          0x000000008020327a      0x18e stack.o
-                0x000000008020327a                initStack
-                0x000000008020329a                isEmpty
-                0x00000000802032c8                isFull
-                0x00000000802032fa                push
-                0x0000000080203364                pop
-                0x00000000802033c0                top
- .text          0x0000000080203408      0xa9c address.o
-                0x000000008020344e                phys_addr_from_size_t
-                0x0000000080203472                phys_page_num_from_size_t
-                0x0000000080203496                size_t_from_phys_addr
-                0x00000000802034ac                size_t_from_phys_page_num
-                0x00000000802034c2                phys_addr_from_phys_page_num
-                0x00000000802034e2                virt_addr_from_size_t
-                0x0000000080203506                virt_page_num_from_size_t
-                0x000000008020352c                size_t_from_virt_addr
-                0x000000008020355a                size_t_from_virt_page_num
-                0x0000000080203570                floor_phys
-                0x0000000080203590                ceil_phys
-                0x00000000802035b6                floor_virts
-                0x00000000802035d6                virt_page_num_from_virt_addr
-                0x00000000802035f6                PageTableEntry_new
-                0x0000000080203624                PageTableEntry_empty
-                0x000000008020363a                PageTableEntry_ppn
-                0x0000000080203664                PageTableEntry_flags
-                0x0000000080203680                PageTableEntry_is_valid
-                0x00000000802036b6                get_bytes_array
-                0x00000000802036de                get_pte_array
-                0x0000000080203706                StackFrameAllocator_new
-                0x0000000080203738                StackFrameAllocator_init
-                0x0000000080203766                StackFrameAllocator_alloc
-                0x00000000802037ea                StackFrameAllocator_dealloc
-                0x000000008020388c                frame_alloctor_init
-                0x00000000802038ec                indexes
-                0x000000008020397a                find_pte_create
-                0x0000000080203a44                kalloc
-                0x0000000080203a6c                find_pte
-                0x0000000080203b16                PageTable_map
-                0x0000000080203c04                uvmcopy
-                0x0000000080203cea                PageTable_unmap
-                0x0000000080203d54                kvmmake
-                0x0000000080203e36                kvminit
-                0x0000000080203e72                kvminithart
- .text          0x0000000080203ea4       0x6c assert.o
-                0x0000000080203ec2                assertion_failure
- .text          0x0000000080203f10      0x430 vsprintf.o
-                0x0000000080203f10                _vsnprintf
- .text          0x0000000080204340       0xc2 printf.o
-                0x00000000802043aa                printf
- .text          0x0000000080204402      0x492 loader.o
-                0x0000000080204402                get_num_app
-                0x000000008020441a                get_app_data
-                0x00000000802044d0                get_app_names
-                0x000000008020463a                load_app
+                0x000000008020248a                trap_return
+ .text          0x00000000802024ec      0x2d0 syscall.o
+                0x00000000802024ec                translated_byte_buffer
+                0x0000000080202578                __sys_write
+                0x00000000802025d6                __sys_read
+                0x000000008020265c                __sys_yield
+                0x0000000080202672                __sys_gettime
+                0x000000008020268a                __sys_exec
+                0x00000000802026c6                __SYSCALL
+ .text          0x00000000802027bc      0x16c string.o
+                0x00000000802027bc                strlen
+                0x00000000802027f8                memcpy
+                0x000000008020284e                memset
+                0x000000008020289e                strcmp
+ .text          0x0000000080202928      0x15a app.o
+                0x0000000080202928                syscall
+                0x000000008020295c                sys_write
+                0x0000000080202992                sys_yield
+                0x00000000802029b4                sys_gettime
+                0x00000000802029d6                sys_read
+                0x0000000080202a0e                sys_fork
+                0x0000000080202a32                sys_exec
+                0x0000000080202a5e                getchar
+ .text          0x0000000080202a82      0xb3c task.o
+                0x0000000080202ab6                tcx_init
+                0x0000000080202b2e                procinit
+                0x0000000080202b70                proc_mapstacks
+                0x0000000080202c4c                proc_trap
+                0x0000000080202c8a                proc_pagetable
+                0x0000000080202d14                task_create_pt
+                0x0000000080202da4                app_init
+                0x0000000080202f04                get_current_trap_cx
+                0x0000000080202f30                current_user_token
+                0x0000000080202f62                schedule
+                0x000000008020306a                run_first_task
+                0x00000000802030ae                current_proc
+                0x00000000802030d8                allocpid
+                0x0000000080203112                allocproc
+                0x0000000080203186                __sys_fork
+                0x0000000080203288                exec
+ .text          0x00000000802035be      0x124 timer.o
+                0x0000000080203640                set_next_trigger
+                0x0000000080203668                timer_init
+                0x00000000802036b6                get_time_us
+ .text          0x00000000802036e2      0x18e stack.o
+                0x00000000802036e2                initStack
+                0x0000000080203702                isEmpty
+                0x0000000080203730                isFull
+                0x0000000080203762                push
+                0x00000000802037cc                pop
+                0x0000000080203828                top
+ .text          0x0000000080203870      0xcba address.o
+                0x00000000802038b6                phys_addr_from_size_t
+                0x00000000802038da                phys_page_num_from_size_t
+                0x00000000802038fe                size_t_from_phys_addr
+                0x0000000080203914                size_t_from_phys_page_num
+                0x000000008020392a                phys_addr_from_phys_page_num
+                0x000000008020394a                virt_addr_from_size_t
+                0x000000008020396e                virt_page_num_from_size_t
+                0x0000000080203994                size_t_from_virt_addr
+                0x00000000802039c2                size_t_from_virt_page_num
+                0x00000000802039d8                floor_phys
+                0x00000000802039f8                ceil_phys
+                0x0000000080203a1e                floor_virts
+                0x0000000080203a3e                virt_page_num_from_virt_addr
+                0x0000000080203a5e                PageTableEntry_new
+                0x0000000080203a8c                PageTableEntry_empty
+                0x0000000080203aa2                PageTableEntry_ppn
+                0x0000000080203acc                PageTableEntry_flags
+                0x0000000080203ae8                PageTableEntry_is_valid
+                0x0000000080203b1e                get_bytes_array
+                0x0000000080203b46                get_pte_array
+                0x0000000080203b6e                StackFrameAllocator_new
+                0x0000000080203ba0                StackFrameAllocator_init
+                0x0000000080203bce                StackFrameAllocator_alloc
+                0x0000000080203c52                StackFrameAllocator_dealloc
+                0x0000000080203cf4                frame_alloctor_init
+                0x0000000080203d54                indexes
+                0x0000000080203de2                find_pte_create
+                0x0000000080203eac                kalloc
+                0x0000000080203ed4                kfree
+                0x0000000080203efa                find_pte
+                0x0000000080203fa4                PageTable_map
+                0x0000000080204092                uvmcopy
+                0x0000000080204178                uvmunmap
+                0x000000008020425a                freewalk
+                0x000000008020431a                uvmfree
+                0x0000000080204368                proc_freepagetable
+                0x00000000802043da                kvmmake
+                0x00000000802044bc                kvminit
+                0x00000000802044f8                kvminithart
+ .text          0x000000008020452a       0x6c assert.o
+                0x0000000080204548                assertion_failure
+ .text          0x0000000080204596      0x430 vsprintf.o
+                0x0000000080204596                _vsnprintf
+ .text          0x00000000802049c6       0xc2 printf.o
+                0x0000000080204a30                printf
+ .text          0x0000000080204a88      0x532 loader.o
+                0x0000000080204a88                get_num_app
+                0x0000000080204aa0                get_app_data
+                0x0000000080204b48                get_app_data_by_name
+                0x0000000080204bfa                get_app_names
+                0x0000000080204cde                flags_to_mmap_prot
+                0x0000000080204d64                load_app
                 0x0000000080205000                . = ALIGN (0x1000)
- *fill*         0x0000000080204894      0x76c 
+ *fill*         0x0000000080204fba       0x46 
                 0x0000000080205000                PROVIDE (etext = .)
 
 .rodata         0x0000000080205000     0x1000
@@ -173,23 +183,23 @@ LOAD loader.o
  *fill*         0x000000008020504a        0x6 
  .rodata        0x0000000080205050       0x56 trap.o
  *fill*         0x00000000802050a6        0x2 
- .rodata        0x00000000802050a8       0x63 syscall.o
- *fill*         0x000000008020510b        0x5 
- .rodata        0x0000000080205110       0x60 task.o
- .rodata        0x0000000080205170       0x38 stack.o
- .rodata        0x00000000802051a8       0x72 address.o
- *fill*         0x000000008020521a        0x6 
- .rodata        0x0000000080205220       0x74 assert.o
- .rodata        0x0000000080205294       0x58 vsprintf.o
- *fill*         0x00000000802052ec        0x4 
- .rodata        0x00000000802052f0       0x9b loader.o
+ .rodata        0x00000000802050a8       0x7b syscall.o
+ *fill*         0x0000000080205123        0x5 
+ .rodata        0x0000000080205128       0xb0 task.o
+ .rodata        0x00000000802051d8       0x38 stack.o
+ .rodata        0x0000000080205210       0xca address.o
+ *fill*         0x00000000802052da        0x6 
+ .rodata        0x00000000802052e0       0x74 assert.o
+ .rodata        0x0000000080205354       0x58 vsprintf.o
+ *fill*         0x00000000802053ac        0x4 
+ .rodata        0x00000000802053b0       0xc3 loader.o
                 0x0000000080206000                . = ALIGN (0x1000)
- *fill*         0x000000008020538b      0xc75 
+ *fill*         0x0000000080205473      0xb8d 
 
 .rela.dyn       0x0000000080206000        0x0
  .rela.text     0x0000000080206000        0x0 entry.o
 
-.data           0x0000000080206000     0x5000
+.data           0x0000000080206000     0x8000
  *(.sdata .sdata.*)
  .sdata         0x0000000080206000        0x4 task.o
                 0x0000000080206000                nextpid
@@ -198,66 +208,68 @@ LOAD loader.o
  .data          0x0000000080206004        0x0 kerneltrap.o
  .data          0x0000000080206004        0x0 switch.o
  *fill*         0x0000000080206004        0x4 
- .data          0x0000000080206008     0x4eb8 link_app.o
+ .data          0x0000000080206008     0x76b0 link_app.o
                 0x0000000080206008                _num_app
-                0x0000000080206028                _app_names
-                0x0000000080206038                app_0_start
-                0x0000000080208780                app_0_end
-                0x0000000080208780                app_1_start
-                0x000000008020aec0                app_1_end
- .data          0x000000008020aec0        0x0 sbi.o
- .data          0x000000008020aec0        0x0 main.o
- .data          0x000000008020aec0        0x0 printk.o
- .data          0x000000008020aec0        0x0 trap.o
- .data          0x000000008020aec0        0x0 syscall.o
- .data          0x000000008020aec0        0x0 string.o
- .data          0x000000008020aec0        0x0 app.o
- .data          0x000000008020aec0        0x0 task.o
- .data          0x000000008020aec0        0x0 timer.o
- .data          0x000000008020aec0        0x0 stack.o
- .data          0x000000008020aec0        0x0 address.o
- .data          0x000000008020aec0        0x0 assert.o
- .data          0x000000008020aec0        0x0 vsprintf.o
- .data          0x000000008020aec0        0x0 printf.o
- .data          0x000000008020aec0        0x0 loader.o
-                0x000000008020b000                . = ALIGN (0x1000)
- *fill*         0x000000008020aec0      0x140 
+                0x0000000080206030                _app_names
+                0x0000000080206040                app_0_start
+                0x00000000802087c8                app_0_end
+                0x00000000802087c8                app_1_start
+                0x000000008020af40                app_2_start
+                0x000000008020af40                app_1_end
+                0x000000008020d6b8                app_2_end
+ .data          0x000000008020d6b8        0x0 sbi.o
+ .data          0x000000008020d6b8        0x0 main.o
+ .data          0x000000008020d6b8        0x0 printk.o
+ .data          0x000000008020d6b8        0x0 trap.o
+ .data          0x000000008020d6b8        0x0 syscall.o
+ .data          0x000000008020d6b8        0x0 string.o
+ .data          0x000000008020d6b8        0x0 app.o
+ .data          0x000000008020d6b8        0x0 task.o
+ .data          0x000000008020d6b8        0x0 timer.o
+ .data          0x000000008020d6b8        0x0 stack.o
+ .data          0x000000008020d6b8        0x0 address.o
+ .data          0x000000008020d6b8        0x0 assert.o
+ .data          0x000000008020d6b8        0x0 vsprintf.o
+ .data          0x000000008020d6b8        0x0 printf.o
+ .data          0x000000008020d6b8        0x0 loader.o
+                0x000000008020e000                . = ALIGN (0x1000)
+ *fill*         0x000000008020d6b8      0x948 
                 [!provide]                        PROVIDE (_data_end = .)
 
-.bss            0x000000008020b000    0x25000
+.bss            0x000000008020e000    0x25000
  *(.sbss .sbss.*)
- .sbss          0x000000008020b000       0x10 address.o
-                0x000000008020b000                kernel_pagetable
-                0x000000008020b008                kernel_satp
+ .sbss          0x000000008020e000       0x10 address.o
+                0x000000008020e000                kernel_pagetable
+                0x000000008020e008                kernel_satp
  *(.bss .bss.*)
- .bss           0x000000008020b010        0x0 entry.o
- .bss.stack     0x000000008020b010    0x10000 entry.o
-                0x000000008020b010                boot_stack_lower_bound
-                0x000000008021b010                boot_stack_top
- .bss           0x000000008021b010        0x0 kerneltrap.o
- .bss           0x000000008021b010        0x0 switch.o
- .bss           0x000000008021b010        0x0 link_app.o
- .bss           0x000000008021b010        0x0 sbi.o
- .bss           0x000000008021b010        0x0 main.o
- .bss           0x000000008021b010      0x3e8 printk.o
- .bss           0x000000008021b3f8        0x0 trap.o
- .bss           0x000000008021b3f8        0x0 syscall.o
- .bss           0x000000008021b3f8        0x0 string.o
- .bss           0x000000008021b3f8        0x0 app.o
- .bss           0x000000008021b3f8      0x6e8 task.o
-                0x000000008021b3f8                tasks
- .bss           0x000000008021bae0        0x0 timer.o
- .bss           0x000000008021bae0        0x0 stack.o
- .bss           0x000000008021bae0    0x13898 address.o
-                0x000000008021bae0                FrameAllocatorImpl
- .bss           0x000000008022f378        0x0 assert.o
- .bss           0x000000008022f378        0x0 vsprintf.o
- .bss           0x000000008022f378      0x3e8 printf.o
- .bss           0x000000008022f760       0x50 loader.o
+ .bss           0x000000008020e010        0x0 entry.o
+ .bss.stack     0x000000008020e010    0x10000 entry.o
+                0x000000008020e010                boot_stack_lower_bound
+                0x000000008021e010                boot_stack_top
+ .bss           0x000000008021e010        0x0 kerneltrap.o
+ .bss           0x000000008021e010        0x0 switch.o
+ .bss           0x000000008021e010        0x0 link_app.o
+ .bss           0x000000008021e010        0x0 sbi.o
+ .bss           0x000000008021e010        0x0 main.o
+ .bss           0x000000008021e010      0x3e8 printk.o
+ .bss           0x000000008021e3f8        0x0 trap.o
+ .bss           0x000000008021e3f8        0x0 syscall.o
+ .bss           0x000000008021e3f8        0x0 string.o
+ .bss           0x000000008021e3f8        0x0 app.o
+ .bss           0x000000008021e3f8      0x6e8 task.o
+                0x000000008021e3f8                tasks
+ .bss           0x000000008021eae0        0x0 timer.o
+ .bss           0x000000008021eae0        0x0 stack.o
+ .bss           0x000000008021eae0    0x13898 address.o
+                0x000000008021eae0                FrameAllocatorImpl
+ .bss           0x0000000080232378        0x0 assert.o
+ .bss           0x0000000080232378        0x0 vsprintf.o
+ .bss           0x0000000080232378      0x3e8 printf.o
+ .bss           0x0000000080232760       0x50 loader.o
  *(COMMON)
-                0x0000000080230000                . = ALIGN (0x1000)
- *fill*         0x000000008022f7b0      0x850 
-                0x0000000080230000                PROVIDE (kernelend = .)
+                0x0000000080233000                . = ALIGN (0x1000)
+ *fill*         0x00000000802327b0      0x850 
+                0x0000000080233000                PROVIDE (kernelend = .)
 OUTPUT(os.elf elf64-littleriscv)
 
 .riscv.attributes
@@ -319,25 +331,25 @@ OUTPUT(os.elf elf64-littleriscv)
  .comment       0x000000000000000f       0x10 printf.o
  .comment       0x000000000000000f       0x10 loader.o
 
-.debug_line     0x0000000000000000     0x2915
+.debug_line     0x0000000000000000     0x2f4f
  .debug_line    0x0000000000000000       0x52 entry.o
  .debug_line    0x0000000000000052      0x238 kerneltrap.o
  .debug_line    0x000000000000028a       0x72 switch.o
  .debug_line    0x00000000000002fc      0x100 sbi.o
  .debug_line    0x00000000000003fc       0xc8 main.o
  .debug_line    0x00000000000004c4      0x141 printk.o
- .debug_line    0x0000000000000605      0x1f1 trap.o
- .debug_line    0x00000000000007f6      0x1f4 syscall.o
- .debug_line    0x00000000000009ea      0x11f string.o
- .debug_line    0x0000000000000b09      0x11a app.o
- .debug_line    0x0000000000000c23      0x5c6 task.o
- .debug_line    0x00000000000011e9      0x16e timer.o
- .debug_line    0x0000000000001357      0x18f stack.o
- .debug_line    0x00000000000014e6      0x9d4 address.o
- .debug_line    0x0000000000001eba       0x89 assert.o
- .debug_line    0x0000000000001f43      0x4e8 vsprintf.o
- .debug_line    0x000000000000242b       0xd0 printf.o
- .debug_line    0x00000000000024fb      0x41a loader.o
+ .debug_line    0x0000000000000605      0x201 trap.o
+ .debug_line    0x0000000000000806      0x220 syscall.o
+ .debug_line    0x0000000000000a26      0x1e1 string.o
+ .debug_line    0x0000000000000c07      0x130 app.o
+ .debug_line    0x0000000000000d37      0x8b8 task.o
+ .debug_line    0x00000000000015ef      0x16e timer.o
+ .debug_line    0x000000000000175d      0x18f stack.o
+ .debug_line    0x00000000000018ec      0xb8a address.o
+ .debug_line    0x0000000000002476       0x89 assert.o
+ .debug_line    0x00000000000024ff      0x4e8 vsprintf.o
+ .debug_line    0x00000000000029e7       0xd0 printf.o
+ .debug_line    0x0000000000002ab7      0x498 loader.o
 
 .debug_line_str
                 0x0000000000000000      0x1bc
@@ -372,7 +384,7 @@ OUTPUT(os.elf elf64-littleriscv)
                                          0x6a (size before relaxing)
  .debug_line_str
                 0x0000000000000144       0x14 task.o
-                                         0x9e (size before relaxing)
+                                         0xb0 (size before relaxing)
  .debug_line_str
                 0x0000000000000158        0xc timer.o
                                          0x75 (size before relaxing)
@@ -395,45 +407,45 @@ OUTPUT(os.elf elf64-littleriscv)
                 0x00000000000001af        0xd loader.o
                                          0xa9 (size before relaxing)
 
-.debug_info     0x0000000000000000     0x3dc0
+.debug_info     0x0000000000000000     0x44ea
  .debug_info    0x0000000000000000       0x28 entry.o
  .debug_info    0x0000000000000028       0x29 kerneltrap.o
  .debug_info    0x0000000000000051       0x28 switch.o
  .debug_info    0x0000000000000079      0x2b8 sbi.o
  .debug_info    0x0000000000000331      0x162 main.o
  .debug_info    0x0000000000000493      0x216 printk.o
- .debug_info    0x00000000000006a9      0x422 trap.o
- .debug_info    0x0000000000000acb      0x4be syscall.o
- .debug_info    0x0000000000000f89      0x186 string.o
- .debug_info    0x000000000000110f      0x27f app.o
- .debug_info    0x000000000000138e      0xa1c task.o
- .debug_info    0x0000000000001daa      0x1f9 timer.o
- .debug_info    0x0000000000001fa3      0x215 stack.o
- .debug_info    0x00000000000021b8      0xe59 address.o
- .debug_info    0x0000000000003011      0x11c assert.o
- .debug_info    0x000000000000312d      0x233 vsprintf.o
- .debug_info    0x0000000000003360      0x1df printf.o
- .debug_info    0x000000000000353f      0x881 loader.o
+ .debug_info    0x00000000000006a9      0x442 trap.o
+ .debug_info    0x0000000000000aeb      0x4fd syscall.o
+ .debug_info    0x0000000000000fe8      0x1c1 string.o
+ .debug_info    0x00000000000011a9      0x2b6 app.o
+ .debug_info    0x000000000000145f      0xe55 task.o
+ .debug_info    0x00000000000022b4      0x1f9 timer.o
+ .debug_info    0x00000000000024ad      0x215 stack.o
+ .debug_info    0x00000000000026c2      0xfea address.o
+ .debug_info    0x00000000000036ac      0x11c assert.o
+ .debug_info    0x00000000000037c8      0x233 vsprintf.o
+ .debug_info    0x00000000000039fb      0x1df printf.o
+ .debug_info    0x0000000000003bda      0x910 loader.o
 
-.debug_abbrev   0x0000000000000000     0x164d
+.debug_abbrev   0x0000000000000000     0x16b3
  .debug_abbrev  0x0000000000000000       0x14 entry.o
  .debug_abbrev  0x0000000000000014       0x14 kerneltrap.o
  .debug_abbrev  0x0000000000000028       0x14 switch.o
  .debug_abbrev  0x000000000000003c      0x114 sbi.o
  .debug_abbrev  0x0000000000000150       0xd4 main.o
  .debug_abbrev  0x0000000000000224      0x15a printk.o
- .debug_abbrev  0x000000000000037e      0x19e trap.o
- .debug_abbrev  0x000000000000051c      0x1d4 syscall.o
- .debug_abbrev  0x00000000000006f0       0xab string.o
- .debug_abbrev  0x000000000000079b      0x131 app.o
- .debug_abbrev  0x00000000000008cc      0x2e8 task.o
- .debug_abbrev  0x0000000000000bb4      0x122 timer.o
- .debug_abbrev  0x0000000000000cd6      0x134 stack.o
- .debug_abbrev  0x0000000000000e0a      0x3b4 address.o
- .debug_abbrev  0x00000000000011be       0xb3 assert.o
- .debug_abbrev  0x0000000000001271       0xbb vsprintf.o
- .debug_abbrev  0x000000000000132c      0x111 printf.o
- .debug_abbrev  0x000000000000143d      0x210 loader.o
+ .debug_abbrev  0x000000000000037e      0x1a7 trap.o
+ .debug_abbrev  0x0000000000000525      0x1d4 syscall.o
+ .debug_abbrev  0x00000000000006f9       0xc6 string.o
+ .debug_abbrev  0x00000000000007bf      0x131 app.o
+ .debug_abbrev  0x00000000000008f0      0x329 task.o
+ .debug_abbrev  0x0000000000000c19      0x122 timer.o
+ .debug_abbrev  0x0000000000000d3b      0x134 stack.o
+ .debug_abbrev  0x0000000000000e6f      0x3b2 address.o
+ .debug_abbrev  0x0000000000001221       0xb3 assert.o
+ .debug_abbrev  0x00000000000012d4       0xbb vsprintf.o
+ .debug_abbrev  0x000000000000138f      0x111 printf.o
+ .debug_abbrev  0x00000000000014a0      0x213 loader.o
 
 .debug_aranges  0x0000000000000000      0x360
  .debug_aranges
@@ -473,7 +485,7 @@ OUTPUT(os.elf elf64-littleriscv)
  .debug_aranges
                 0x0000000000000330       0x30 loader.o
 
-.debug_str      0x0000000000000000      0xc95
+.debug_str      0x0000000000000000      0xd0e
  .debug_str     0x0000000000000000       0x32 entry.o
  .debug_str     0x0000000000000032       0x11 kerneltrap.o
                                          0x37 (size before relaxing)
@@ -485,47 +497,47 @@ OUTPUT(os.elf elf64-littleriscv)
                                         0x194 (size before relaxing)
  .debug_str     0x00000000000003b1       0x4d printk.o
                                         0x174 (size before relaxing)
- .debug_str     0x00000000000003fe      0x108 trap.o
-                                        0x247 (size before relaxing)
- .debug_str     0x0000000000000506      0x137 syscall.o
-                                        0x2b5 (size before relaxing)
- .debug_str     0x000000000000063d       0x20 string.o
-                                        0x124 (size before relaxing)
- .debug_str     0x000000000000065d        0x8 app.o
-                                        0x190 (size before relaxing)
- .debug_str     0x0000000000000665      0x1e5 task.o
-                                        0x40b (size before relaxing)
- .debug_str     0x000000000000084a       0x14 timer.o
+ .debug_str     0x00000000000003fe      0x10f trap.o
+                                        0x24e (size before relaxing)
+ .debug_str     0x000000000000050d      0x144 syscall.o
+                                        0x2cc (size before relaxing)
+ .debug_str     0x0000000000000651       0x27 string.o
+                                        0x12b (size before relaxing)
+ .debug_str     0x0000000000000678        0x8 app.o
+                                        0x19e (size before relaxing)
+ .debug_str     0x0000000000000680      0x355 task.o
+                                        0x5d2 (size before relaxing)
+ .debug_str     0x00000000000009d5       0x14 timer.o
                                         0x172 (size before relaxing)
- .debug_str     0x000000000000085e       0x24 stack.o
+ .debug_str     0x00000000000009e9       0x24 stack.o
                                         0x148 (size before relaxing)
- .debug_str     0x0000000000000882      0x28f address.o
-                                        0x57f (size before relaxing)
- .debug_str     0x0000000000000b11       0x14 assert.o
+ .debug_str     0x0000000000000a0d      0x2b3 address.o
+                                        0x5c5 (size before relaxing)
+ .debug_str     0x0000000000000cc0        0xf assert.o
                                         0x12f (size before relaxing)
- .debug_str     0x0000000000000b25       0x19 vsprintf.o
+ .debug_str     0x0000000000000ccf       0x19 vsprintf.o
                                         0x158 (size before relaxing)
- .debug_str     0x0000000000000b3e       0x19 printf.o
+ .debug_str     0x0000000000000ce8       0x19 printf.o
                                         0x17f (size before relaxing)
- .debug_str     0x0000000000000b3e      0x157 loader.o
-                                        0x43c (size before relaxing)
+ .debug_str     0x0000000000000ce8       0x26 loader.o
+                                        0x45d (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x1600
+.debug_frame    0x0000000000000000     0x17c0
  .debug_frame   0x0000000000000000       0xd0 sbi.o
  .debug_frame   0x00000000000000d0       0x40 main.o
  .debug_frame   0x0000000000000110       0xc8 printk.o
  .debug_frame   0x00000000000001d8      0x160 trap.o
- .debug_frame   0x0000000000000338      0x130 syscall.o
- .debug_frame   0x0000000000000468       0xa0 string.o
- .debug_frame   0x0000000000000508      0x160 app.o
- .debug_frame   0x0000000000000668      0x360 task.o
- .debug_frame   0x00000000000009c8      0x190 timer.o
- .debug_frame   0x0000000000000b58      0x130 stack.o
- .debug_frame   0x0000000000000c88      0x748 address.o
- .debug_frame   0x00000000000013d0       0x68 assert.o
- .debug_frame   0x0000000000001438       0x40 vsprintf.o
- .debug_frame   0x0000000000001478       0x70 printf.o
- .debug_frame   0x00000000000014e8      0x118 loader.o
+ .debug_frame   0x0000000000000338      0x160 syscall.o
+ .debug_frame   0x0000000000000498       0xd0 string.o
+ .debug_frame   0x0000000000000568      0x190 app.o
+ .debug_frame   0x00000000000006f8      0x3a8 task.o
+ .debug_frame   0x0000000000000aa0      0x190 timer.o
+ .debug_frame   0x0000000000000c30      0x130 stack.o
+ .debug_frame   0x0000000000000d60      0x808 address.o
+ .debug_frame   0x0000000000001568       0x68 assert.o
+ .debug_frame   0x00000000000015d0       0x40 vsprintf.o
+ .debug_frame   0x0000000000001610       0x70 printf.o
+ .debug_frame   0x0000000000001680      0x140 loader.o
 
 .debug_rnglists
                 0x0000000000000000       0x81

@@ -281,6 +281,11 @@ PhysPageNum kalloc(void)
     return frame;
 }
 
+void kfree(PhysPageNum ppn)
+{
+    StackFrameAllocator_dealloc(&FrameAllocatorImpl,ppn);
+}
+
 PageTableEntry* find_pte(PageTable* pt, VirtPageNum vpn)
 {
     // 拿到虚拟页号的三级索引，保存到idx数组中
@@ -367,13 +372,75 @@ int uvmcopy(PageTable* old, PageTable* new, u64 sz)
     
 }
 
-
-/* 取消映射的函数先不管 */
-void PageTable_unmap(PageTable* pt, VirtPageNum vpn)
+/* 取消映射 */
+void uvmunmap(PageTable* pt, VirtPageNum vpn, u64 npages, int do_free)
 {
-    PageTableEntry* pte = find_pte(pt,vpn);
-    assert(!PageTableEntry_is_valid(pte));
-    *pte = PageTableEntry_empty();
+    PageTableEntry* pte;
+    u64 a;
+    for (a = vpn.value; a < vpn.value + npages; a++)
+    {
+
+        printk("vpn.value:%d\n",vpn.value);
+        pte = find_pte(pt,virt_page_num_from_size_t(a));
+        
+        if(pte !=0 )
+        {
+            printk("pte->bits:%x\n",(u64)pte->bits);
+            if(do_free)
+            {
+                u64 phyaddr = PTE2PA(pte->bits);
+                PhysPageNum ppn = floor_phys(phys_addr_from_size_t(phyaddr));
+                printk("ppn.value:%d\n",ppn.value);
+                kfree(ppn);
+
+            }
+            *pte = PageTableEntry_empty();
+        }
+    }
+    
+}
+
+/* 解除页表映射关系，释放内存*/
+void freewalk(PhysPageNum ppn)
+{
+    for (int i = 0; i < 512; i++)
+    {
+        PageTableEntry* pte =  &get_pte_array(ppn)[i];
+        //printk("i:%d ",i);
+        if((pte->bits & PTE_V) && (pte->bits & (PTE_R|PTE_W|PTE_X)) == 0)
+        {
+            //取出下一级页表的页号
+            //printk("pte->bits:%x\n",pte->bits);
+            PhysPageNum child_ppn = PageTableEntry_ppn(pte);
+            //printk("child ppn:%d\n",child_ppn.value);
+            freewalk(child_ppn);
+            *pte = PageTableEntry_empty();
+        }
+        else if(pte->bits & PTE_V)
+        {
+            //printk("pte:%x\n",pte->bits);
+            panic("freewalk: leaf");
+        }
+    }
+    printk("free ppn:%d\n",ppn.value);
+    printk("\n");
+    kfree(ppn); 
+}
+
+void uvmfree(PageTable* pt , u64 sz)
+{
+    if(sz > 0)
+    {
+        uvmunmap(pt,floor_virts(virt_addr_from_size_t(0)),sz/PAGE_SIZE,1);
+    }
+    freewalk(pt->root_ppn);
+}
+
+void proc_freepagetable(PageTable* pagetable, u64 sz)
+{
+  uvmunmap(pagetable, floor_virts(virt_addr_from_size_t(TRAMPOLINE)), 1, 0);
+  uvmunmap(pagetable, floor_virts(virt_addr_from_size_t(TRAPFRAME)), 1, 1);
+  uvmfree(pagetable, sz);
 }
 
 extern char etext[];     //os.ld中定义 为物理地址

@@ -27,6 +27,23 @@ AppMetadata  get_app_data(size_t app_id)
     return metadata;
 }
 
+/* 根据app的名字返回app的id */
+AppMetadata get_app_data_by_name(char* path)
+{
+    AppMetadata metadata;
+    int app_num = get_num_app();
+    for (size_t i = 0; i < app_num; i++)
+    {
+        if(strcmp(path,app_names[i])==0)
+        {
+           metadata =  get_app_data(i+1);
+           printk("find app:%s id:%d\n",path,metadata.id);
+           return metadata;
+        }
+    }
+    printk("not exit!!\n");
+}
+
 void get_app_names()
 {
     int app_num = get_num_app();
@@ -51,7 +68,7 @@ void get_app_names()
     
 }
 
-static u8 flags_to_mmap_prot(u8 flags)
+u8 flags_to_mmap_prot(u8 flags)
 {
     return (flags & PF_R ? PTE_R : 0) | 
            (flags & PF_W ? PTE_W : 0) |
