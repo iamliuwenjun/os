@@ -68,8 +68,7 @@ uint64_t __sys_exec(const char* name)
 {
     char* app_name = translated_byte_buffer(name);
     printk("exec app_name:%s\n",app_name);
-    exec(app_name);
-    return 0;
+    return exec(app_name);
 }
 
 uint64_t __SYSCALL(size_t syscall_id, reg_t arg1, reg_t arg2, reg_t arg3) {

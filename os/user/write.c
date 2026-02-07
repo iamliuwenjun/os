@@ -1,9 +1,0 @@
-#include <lwjos/types.h>
-#include <lwjos/syscall.h>
-#include <lwjos/string.h>
-int main()
-{
-
-    sys_exec("xec");
-    return 0;
-}

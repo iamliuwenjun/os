@@ -48,6 +48,7 @@ void get_app_names()
 {
     int app_num = get_num_app();
     printk("/**** APPS ****\n");
+    printk("num app:%d\n",app_num);
     for (size_t i = 0; i < app_num; i++)
     {
         if(i==0)
@@ -58,7 +59,7 @@ void get_app_names()
         else
         {
             size_t len = strlen(app_names[i-1]);
-            app_names[i] = (char*)((u64)_app_names + i * len + 1);
+            app_names[i] = (char*)((u64)app_names[i-1] + len + 1);
         }
 
         printk("%s\n",app_names[i]);
