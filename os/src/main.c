@@ -13,8 +13,8 @@ void os_main()
    //加载进程
    load_app(0);
    app_init(0);
-   load_app(1);
-   app_init(1);
+   // load_app(1);
+   // app_init(1);
    //映射内核
    kvminithart();
    //trap初始化

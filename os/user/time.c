@@ -2,8 +2,5 @@
 
 int main()
 {
-    while (1)
-    {
-        /* code */
-    }
+    sys_exec("user_shell");
 }
