@@ -5,6 +5,7 @@ if [ ! -d "$SHELL_FOLDER/output" ]; then
 mkdir $SHELL_FOLDER/output
 fi  
 
+echo "------------------------- 编译qemu---------------------------------------"
 cd qemu-8.0.2
 if [ ! -d "$SHELL_FOLDER/output/qemu" ]; then  
 ./configure --prefix=$SHELL_FOLDER/output/qemu  --target-list=riscv64-softmmu --enable-gtk  --enable-virtfs --disable-gio
@@ -13,6 +14,7 @@ make -j16$PROCESSORS
 make install
 
 # # 编译 lowlevelboot
+echo "------------------------- 编译lowlevelboot-----------------------------"
 CROSS_PREFIX=riscv64-unknown-elf
 if [ ! -d "$SHELL_FOLDER/output/lowlevelboot" ]; then  
 mkdir $SHELL_FOLDER/output/lowlevelboot
@@ -26,6 +28,7 @@ $CROSS_PREFIX-objcopy -O binary -S $SHELL_FOLDER/output/lowlevelboot/lowlevel_fw
 $CROSS_PREFIX-objdump --source --demangle --disassemble --reloc --wide $SHELL_FOLDER/output/lowlevelboot/lowlevel_fw.elf > $SHELL_FOLDER/output/lowlevelboot/lowlevel_fw.lst
 
 #编译 opensbi
+echo "------------------------- 编译opensbi --------------------------------"
 if [ ! -d "$SHELL_FOLDER/output/opensbi" ]; then  
 mkdir $SHELL_FOLDER/output/opensbi
 fi  
@@ -39,33 +42,33 @@ dtc -I dts -O dtb -o $SHELL_FOLDER/output/opensbi/quard_star_sbi.dtb quard_star_
 
 
 #编译trusted_domain
+echo "------------------------- 编译trusted_domain -------------------------"
 if [ ! -d "$SHELL_FOLDER/output/trusted_domain" ]; then  
 mkdir $SHELL_FOLDER/output/trusted_domain
 fi  
 cd $SHELL_FOLDER/trusted_domain
-$CROSS_PREFIX-gcc -x assembler-with-cpp -c startup.s -o $SHELL_FOLDER/output/trusted_domain/startup.o
-$CROSS_PREFIX-gcc -nostartfiles -T./link.lds -Wl,-Map=$SHELL_FOLDER/output/trusted_domain/trusted_fw.map -Wl,--gc-sections $SHELL_FOLDER/output/trusted_domain/startup.o -o $SHELL_FOLDER/output/trusted_domain/trusted_fw.elf
-$CROSS_PREFIX-objcopy -O binary -S $SHELL_FOLDER/output/trusted_domain/trusted_fw.elf $SHELL_FOLDER/output/trusted_domain/trusted_fw.bin
-$CROSS_PREFIX-objdump --source --demangle --disassemble --reloc --wide $SHELL_FOLDER/output/trusted_domain/trusted_fw.elf > $SHELL_FOLDER/output/trusted_domain/trusted_fw.lst
+make CROSS_COMPILE=$CROSS_PREFIX- clean
+make CROSS_COMPILE=$CROSS_PREFIX- 
+cp ./build/trusted_fw.* $SHELL_FOLDER/output/trusted_domain/
+rm -rf ./build/
+
 
 # 编译os
+echo "------------------------- 编译timer os -------------------------------"
 if [ ! -d "$SHELL_FOLDER/output/os" ]; then  
 mkdir $SHELL_FOLDER/output/os
 fi
 cd $SHELL_FOLDER/os
-# 首先编译用户程序
-cd user
-make
-cd ..
-
 # 编译app加载模块
 make build_app
 ./build.out
+# 编译os
 make
 cp $SHELL_FOLDER/os/os.bin $SHELL_FOLDER/output/os/os.bin
 make clean
 
 # 合成firmware固件
+echo "------------------------- 合成firmware固件 ----------------------------"
 if [ ! -d "$SHELL_FOLDER/output/fw" ]; then  
 mkdir $SHELL_FOLDER/output/fw
 fi  

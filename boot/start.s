@@ -49,13 +49,13 @@ _start:
 	load_data a0,a1,a2
 
 	//load trusted_fw.bin
-	//[0x20400000:0x20800000] --> [0xb0000000:0xb0400000]
+	//[0x20400000:0x20800000] --> [0xBF800000:0xBFC00000]
     li		a0,	0x204
 	slli	a0,	a0, 20      //a0 = 0x20400000
-    li		a1,	0xb00
-	slli	a1,	a1, 20      //a1 = 0xb0000000
-    li		a2,	0xb04
-	slli	a2,	a2, 20      //a2 = 0xb0400000
+    li		a1,	0xbf8
+	slli	a1,	a1, 20      //a1 = 0xbf800000
+    li		a2,	0xbfc
+	slli	a2,	a2, 20      //a2 = 0xbfc00000
 	load_data a0,a1,a2
 
 	//load os.bin
@@ -64,8 +64,8 @@ _start:
 	slli	a0,	a0, 20      //a0 = 0x20800000
     li		a1,	0x802
 	slli	a1,	a1, 20      //a1 = 0x80200000
-    li		a2,	0x806
-	slli	a2,	a2, 20      //a2 = 0x80600000
+    li		a2,	0x808
+	slli	a2,	a2, 20      //a2 = 0x80800000
 	load_data a0,a1,a2
 
     csrr    a0, mhartid
