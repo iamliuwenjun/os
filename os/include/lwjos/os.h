@@ -14,6 +14,8 @@
 #include <lwjos/string.h>
 #include <lwjos/syscall.h>
 #include <lwjos/task.h>
+#include <lwjos/virtio.h>
+#include <lwjos/bio.h>
 
 /* trap.c */
 extern void trap_init();

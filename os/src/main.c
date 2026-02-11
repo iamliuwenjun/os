@@ -8,6 +8,8 @@ void os_main()
    frame_alloctor_init();
    //初始化内存
    kvminit();
+   //初始化磁盘
+   virtio_disk_init();
    //初始化进程
    procinit();
    //加载initproc进程
