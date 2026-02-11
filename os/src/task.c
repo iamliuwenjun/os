@@ -167,13 +167,11 @@ void schedule()
     /* 轮转调度 */
     int next = _current + 1;
     next = next % _top;
-
-    if(tasks[next].task_state == Ready)
+    if(tasks[next].task_state == Ready || tasks[next].task_state == Running)
     {
         struct TaskContext *current_task_cx_ptr = &(tasks[_current].task_context);
         struct TaskContext *next_task_cx_ptr = &(tasks[next].task_context);
         tasks[next].task_state = Running;
-        tasks[_current].task_state = Ready;
         _current = next;
         __switch(current_task_cx_ptr,next_task_cx_ptr);
     }
@@ -289,4 +287,80 @@ int exec(const char* name)
     proc_freepagetable(&old_pagetable,oldsz);
     //printk("sys_exec\n");
     return 0;
+}
+
+void freeproc(struct TaskControlBlock* p)
+{
+    proc_freepagetable(&p->pagetable, p->base_size);
+
+    p->pagetable.root_ppn.value = 0;
+    p->base_size = 0;
+    p->parent =  0;
+    p->ustack = 0;
+    p->entry = 0;
+    p->task_state = UnInit;
+    p->exit_code = 0;
+}
+
+//将当前进程的所有子进程挂在初始进程 initproc 下面
+void children_proc_clear(struct TaskControlBlock *p)
+{
+  struct TaskControlBlock *children;
+  for(children = tasks; children < &tasks[MAX_TASKS]; children++)
+  {
+    if(children->parent == p)
+    {
+      children->parent = &tasks[0];
+    }
+  }
+}
+
+void exit_current_and_run_next(u64 exit_code)
+{
+  /* 不能把0号进程干掉了 */
+  struct TaskControlBlock* p = current_proc();
+  if(p->pid == 0)
+  {
+    panic("init exiting");
+  }
+
+  p->exit_code = exit_code;
+  p->task_state = Zombie;
+  children_proc_clear(p);
+  _top--;
+  schedule();
+  panic("zombie exit");
+}
+
+
+int wait()
+{
+  struct TaskControlBlock *children;
+  struct TaskControlBlock* p = current_proc();
+  int pid,havekids;
+  printk("debug wait\n");
+  for(;;)
+  {
+    havekids = 0;
+    for(children = tasks; children < &tasks[MAX_TASKS];children++)
+    {
+      if(children->parent == p)
+      {
+        havekids = 1;
+        if(children->task_state == Zombie)
+        {
+          pid = children->pid;
+          freeproc(children);
+          printk("child pid:%d\n",pid);
+          return pid;
+        }
+      }
+    }
+    // 如果此进程没有子进程，则返回 -1
+    if(!havekids)
+    {
+      return -1;
+    }
+    schedule();
+  }
 }
